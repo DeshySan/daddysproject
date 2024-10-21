@@ -88,3 +88,29 @@ export const updateCategory = async (req, res) => {
     });
   }
 };
+
+export const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const categoryExist = await categoryModel.findById(id);
+    if (!categoryExist) {
+      res.status(400).send({
+        success: false,
+        message: `Category  doesnt exist`,
+      });
+    } else {
+      const category = await categoryModel.findByIdAndDelete(id);
+      res.status(200).send({
+        success: true,
+        message: `Category ${category.name} has been deleted successfully`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+      error,
+    });
+  }
+};
