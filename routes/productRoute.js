@@ -1,4 +1,9 @@
-import { getProduct, postProduct } from "../controllers/productController.js";
+import {
+  deleteProduct,
+  getProduct,
+  postProduct,
+  updateProduct,
+} from "../controllers/productController.js";
 import express from "express";
 import multer from "multer";
 import path from "path";
@@ -19,4 +24,6 @@ const upload = multer({ storage: storage });
 
 router.post("/post-product", upload.single("image"), postProduct);
 router.get("/get-product", getProduct);
+router.delete("/delete-product/:id", deleteProduct);
+router.put("/update-product/:id", upload.single("image"), updateProduct);
 export default router;
