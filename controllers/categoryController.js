@@ -5,7 +5,7 @@ const sluggy = (name) => {
 };
 export const getCategory = async (req, res) => {
   try {
-    const category = await categoryModel.findOne({});
+    const category = await categoryModel.find({});
     res.status(200).send({
       success: true,
       message: "Successfully retrieiving categories",
