@@ -25,12 +25,21 @@ const Category = () => {
       text: err,
     });
   };
+  //success handler
+  const sweetSuccess = (msg) => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: msg,
+    });
+  };
   //get all categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data.success) {
         setCategories(data.category);
+        closeModal();
       }
     } catch (error) {
       sweetError(error);
@@ -47,6 +56,10 @@ const Category = () => {
         { name: name }
       );
       console.log(data);
+      if (data.success) {
+        sweetSuccess(data.message);
+        getAllCategory();
+      }
     } catch (error) {
       console.log(error);
     }
