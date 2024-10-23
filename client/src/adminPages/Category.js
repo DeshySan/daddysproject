@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AdminDashboard from "../AdminComponents/AdminDashboard";
 import axios from "axios";
 import Swal from "sweetalert2";
+import CreateCategory from "./CreateCategory";
 
 const Category = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,6 +41,7 @@ const Category = () => {
       if (data.success) {
         setCategories(data.category);
         closeModal();
+        setCategory("");
       }
     } catch (error) {
       sweetError(error);
@@ -53,23 +55,58 @@ const Category = () => {
     try {
       const { data } = await axios.put(
         `/api/v1/category/update-category/${category}`,
-        { name: name }
+        { name }
       );
       console.log(data);
+      if (!data.success) {
+        console.log(data);
+      }
       if (data.success) {
         sweetSuccess(data.message);
+        setName("");
         getAllCategory();
+      } else {
+        // sweetError(data.message);
+        // console.log(data.message);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  //This bloody works
+  // const updateCategory = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const { data } = await axios.put(
+  //       `/api/v1/category/update-category/${category}`,
+  //       { name }
+  //     );
+  //     if (data.success) {
+  //       sweetSuccess(data.message);
+  //       getAllCategory();
+  //       setName(""); // Reset the name after successful update
+  //       setCategory(null); // Reset category ID after successful update
+  //     } else {
+  //       sweetError(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(
+  //       "Update Category Error:",
+  //       error.response ? error.response.data : error.message
+  //     );
+  //     sweetError(
+  //       error.response ? error.response.data.message : "An error occurred"
+  //     );
+  //   }
+  // };
   useEffect(() => {
     getAllCategory();
   }, []);
   return (
     <div>
       <AdminDashboard>
+        <CreateCategory />
         <table className='min-w-full rounded-lg shadow-md text-center'>
           <thead className='bg-lightSlateGray '>
             <tr>

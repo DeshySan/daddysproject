@@ -60,7 +60,7 @@ export const updateCategory = async (req, res) => {
     //validations;
     const existingCategory = await categoryModel.findOne({ name });
     if (existingCategory) {
-      res.status(404).send({
+      res.status(400).send({
         success: false,
         message: "Category name already exists",
       });
