@@ -77,39 +77,25 @@ const Category = () => {
     }
   };
 
-  //This bloody works
-  // const updateCategory = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const { data } = await axios.put(
-  //       `/api/v1/category/update-category/${category}`,
-  //       { name }
-  //     );
-  //     if (data.success) {
-  //       sweetSuccess(data.message);
-  //       getAllCategory();
-  //       setName(""); // Reset the name after successful update
-  //       setCategory(null); // Reset category ID after successful update
-  //     } else {
-  //       sweetError(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(
-  //       "Update Category Error:",
-  //       error.response ? error.response.data : error.message
-  //     );
-  //     sweetError(
-  //       error.response ? error.response.data.message : "An error occurred"
-  //     );
-  //   }
-  // };
+  //post the data
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      alert("Clicked");
+    } catch (error) {}
+  };
+
   useEffect(() => {
     getAllCategory();
   }, []);
   return (
     <div>
       <AdminDashboard>
-        <CreateCategory />
+        <CreateCategory
+          handleSubmit={handleSubmit}
+          value={name}
+          setValue={setName}
+        />
         <table className='min-w-full rounded-lg shadow-md text-center'>
           <thead className='bg-lightSlateGray '>
             <tr>
@@ -126,10 +112,10 @@ const Category = () => {
           </thead>
           <tbody>
             {categories &&
-              categories.map((c) => (
+              categories.map((c, index) => (
                 <>
                   <tr className=' shadow-sm'>
-                    <td key={c._id}>1</td>
+                    <td key={c._id}>{index + 1}</td>
                     <td>{c.name}</td>
                     <td className='py-2 px-4 text-sm'>
                       <button

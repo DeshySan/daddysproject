@@ -1,13 +1,15 @@
 import React from "react";
 
-const CreateCategory = () => {
+const CreateCategory = ({ handleSubmit, value, setValue }) => {
   return (
     <div className='flex items-center mb-4 w-full'>
-      <div className='flex flex-col mb-0 w-full'>
+      <form className='flex flex-col mb-0 w-full' onSubmit={handleSubmit}>
         <label htmlFor='category'>Enter the Category name</label>
         <div className='flex items-center'>
           <input
             type='text'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             className='p-2 border-b border-b-red focus:outline-none focus:border-limeGreen w-[20%] flex-grow'
             name='category'
             placeholder='Enter the Category of the Product'
@@ -16,7 +18,7 @@ const CreateCategory = () => {
             Create
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
