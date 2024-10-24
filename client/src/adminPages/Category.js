@@ -57,20 +57,23 @@ const Category = () => {
         `/api/v1/category/update-category/${category}`,
         { name }
       );
-      console.log(data);
-      if (!data.success) {
-        console.log(data);
-      }
+
       if (data.success) {
         sweetSuccess(data.message);
         setName("");
         getAllCategory();
       } else {
-        // sweetError(data.message);
-        // console.log(data.message);
+        sweetError(data.message);
+        console.log(data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log(
+        "Update Category Error:",
+        error.response ? error.response.data : error.message
+      );
+      sweetError(
+        error.response ? error.response.data.message : "An error occurred"
+      );
     }
   };
 
