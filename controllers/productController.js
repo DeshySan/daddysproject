@@ -55,9 +55,9 @@ export const postProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const getProducts = await productModel.findOne({});
+    const getProducts = await productModel.find({});
     res.status(200).send({
-      success: false,
+      success: true,
       message: "Retrieving all products succesfully",
       getProducts,
     });

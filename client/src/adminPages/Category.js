@@ -9,6 +9,7 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
+  const [editName, setEditName] = useState("");
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -39,6 +40,7 @@ const Category = () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data.success) {
+        console.log(data);
         setCategories(data.category);
         closeModal();
         setCategory("");
@@ -81,10 +83,56 @@ const Category = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      alert("Clicked");
-    } catch (error) {}
+      const { data } = await axios.post(`/api/v1/category/post-category`, {
+        name,
+      });
+      if (data.success) {
+        sweetSuccess(data.message);
+        getAllCategory();
+      } else {
+        sweetError(data.message);
+      }
+    } catch (error) {
+      console.log(
+        "Update Category Error:",
+        error.response ? error.response.data : error.message
+      );
+      sweetError(
+        error.response ? error.response.data.message : "An error occurred"
+      );
+    }
   };
 
+  const getEditName = async (id) => {
+    try {
+      const { data } = await axios.get(`/api/v1/category/get-single/${id}`);
+      if (!data.success) {
+        alert("Something wrong");
+      } else {
+        setName(data.getCategory.name);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/category//delete-category/${id}`
+      );
+
+      if (data.success) {
+        sweetSuccess(data.message);
+        getAllCategory();
+      } else {
+        sweetError(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      sweetError(error);
+    }
+  };
   useEffect(() => {
     getAllCategory();
   }, []);
@@ -122,13 +170,16 @@ const Category = () => {
                         onClick={() => {
                           openModal();
                           {
+                            getEditName(c._id);
                             setCategory(c._id);
                           }
                         }}
                         className='bg-limeGreen hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
                         Edit
                       </button>
-                      <button className='bg-red hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
+                      <button
+                        onClick={() => handleDelete(c._id)}
+                        className='bg-red hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
                         Delete
                       </button>
                     </td>
@@ -156,7 +207,7 @@ const Category = () => {
                     type='text'
                     id='category'
                     name='category'
-                    value={name}
+                    value={editName ? editName : name}
                     onChange={(e) => setName(e.target.value)}
                     className='mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
                     placeholder='Gym Supplies'

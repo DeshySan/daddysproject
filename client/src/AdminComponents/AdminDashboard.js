@@ -21,7 +21,7 @@ const AdminDashboard = ({ children }) => {
               <Link to='/category'> 🐈Category</Link>
             </li>
             <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
-              <Link> 📔 Products</Link>
+              <Link to='/products'> 📔 Products</Link>
             </li>
             <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
               <Link> 👦Users</Link>
