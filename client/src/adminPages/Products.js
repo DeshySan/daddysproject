@@ -66,6 +66,15 @@ const Products = () => {
   const openProductModal = async () => {
     setOpenCreateProduct(true);
   };
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/products/delete-product/${id}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AdminDashboard>
       <div className='flex justify-center'>
@@ -121,7 +130,12 @@ const Products = () => {
                         className='bg-limeGreen hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
                         Edit
                       </button>
-                      <button className='bg-red hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDelete(value._id);
+                        }}
+                        className='bg-red hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
                         Delete
                       </button>
                     </td>

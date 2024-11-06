@@ -86,17 +86,18 @@ export const deleteProduct = async (req, res) => {
       if (chosenProduct.image) {
         const imagePath = chosenProduct.image;
         fs.unlink(imagePath, (err) => {
-          console.log(err);
-          return res.status(500).send({
-            success: false,
-            message: "SOmething went wrong while deleting the image",
-          });
+          if (err) {
+            return res.status(500).send({
+              success: false,
+              message: "SOmething went wrong while deleting the image",
+            });
+          }
         });
       }
       const deleteProduct = await productModel.findByIdAndDelete(id);
       res.status(200).send({
         success: true,
-        message: "Product has been delted successfully",
+        message: "Product has been deleted successfully",
       });
     }
   } catch (error) {
