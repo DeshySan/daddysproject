@@ -3,10 +3,13 @@ import AdminDashboard from "../AdminComponents/AdminDashboard";
 import axios from "axios";
 import { sweetError } from "./errorHandler";
 import ProductModal from "./ProductModal";
+import CreateProduct from "./CreateProduct";
 
 const Products = () => {
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState({});
+  const [category, setCategory] = useState(null);
+  const [productID, setProductID] = useState(null);
   const retrieveProducts = async () => {
     try {
       const { data } = await axios.get(`/api/v1/products/get-product`);
@@ -25,6 +28,7 @@ const Products = () => {
     }
   };
   const fetchCategory = async (categoryID) => {
+    if (!categoryID) return;
     if (categories[categoryID]) return;
     try {
       const { data } = await axios.get(
@@ -43,9 +47,7 @@ const Products = () => {
     retrieveProducts();
   }, []);
 
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
+  useEffect(() => {}, [categories]);
 
   //opening and closign of a modal
   const [openModal, setOpenModal] = useState(false);
@@ -57,14 +59,30 @@ const Products = () => {
   const popModal = async () => {
     setOpenModal(true);
   };
+
+  //create Product Modal
+  const [openCreateProduct, setOpenCreateProduct] = useState(false);
+
+  const openProductModal = async () => {
+    setOpenCreateProduct(true);
+  };
   return (
     <AdminDashboard>
       <div className='flex justify-center'>
         <button
+          onClick={() => setOpenCreateProduct(true)}
           type='submit'
           className='bg-slateGray w-[900px] p-3 text-white rounded-md hover:bg-red transition mt-4'>
           Add a Product
         </button>
+      </div>
+      <div>
+        {openCreateProduct && (
+          <CreateProduct
+            openCreateProduct={openCreateProduct}
+            setOpenCreateProduct={setOpenCreateProduct}
+          />
+        )}
       </div>
       <div className='mt-8'>
         <table className='min-w-full'>
@@ -84,7 +102,7 @@ const Products = () => {
                 <>
                   <tr className='shadow-sm'>
                     <td className='py-2'>{index + 1}</td>
-                    <td>{}</td>
+                    <td>{value.name}</td>
                     <td>{value.description}</td>
                     <td>{value.price}</td>
                     <td>
@@ -95,7 +113,11 @@ const Products = () => {
 
                     <td>
                       <button
-                        onClick={() => popModal()}
+                        onClick={() => {
+                          popModal();
+                          setProductID(value._id);
+                          setCategory(categories[value._id]);
+                        }}
                         className='bg-limeGreen hover:text-blue-700 mr-2 focus:outline-none px-4 py-2'>
                         Edit
                       </button>
@@ -109,7 +131,13 @@ const Products = () => {
           </tbody>
         </table>
       </div>
-      <ProductModal openModal={openModal} closeModal={closeModal} />
+      <ProductModal
+        openModal={openModal}
+        closeModal={closeModal}
+        productID={productID}
+        category={category}
+        setCategory={setCategory}
+      />
     </AdminDashboard>
   );
 };

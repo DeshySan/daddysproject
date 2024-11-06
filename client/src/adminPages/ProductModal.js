@@ -1,22 +1,38 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { sweetError } from "./errorHandler";
 
-const ProductModal = ({ openModal, closeModal, sweetError }) => {
+const ProductModal = ({
+  openModal,
+  closeModal,
+  productID,
+  category,
+  setCategory,
+}) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [price, setPrice] = useState("");
+  // const [category, setCategory] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
-  const updateProduct = async () => {
+  const updateProduct = async (e) => {
+    e.preventDefault();
     try {
-      const { data } = await axios.put(`/api/v1/products/update-product/`, {
-        name,
-        description,
-        price,
-        category,
-      });
+      const { data } = await axios.put(
+        `/api/v1/products/update-product/${productID}`,
+        {
+          name,
+          description,
+          price,
+          category,
+        }
+      );
+      if (data.success) {
+      }
     } catch (error) {
-      console.log(error);
+      console.log(
+        "Update Category Error:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -24,17 +40,18 @@ const ProductModal = ({ openModal, closeModal, sweetError }) => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data.success) {
-        console.log(data);
         setCategoryList(data.category);
       }
     } catch (error) {
-      await sweetError(error);
+      sweetError(error);
     }
   };
 
   useEffect(() => {
+    console.log(category);
     getAllCategory();
   }, []);
+  useEffect(() => {}, [productID]);
   return (
     <div>
       {openModal && (
@@ -52,6 +69,7 @@ const ProductModal = ({ openModal, closeModal, sweetError }) => {
                   type='text'
                   name='name'
                   value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className='mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
                 />
               </div>
@@ -62,6 +80,7 @@ const ProductModal = ({ openModal, closeModal, sweetError }) => {
                   type='text'
                   name='description'
                   value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
 
@@ -71,6 +90,7 @@ const ProductModal = ({ openModal, closeModal, sweetError }) => {
                   className='mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
                   type='number'
                   value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                   name='price'
                 />
               </div>
@@ -78,14 +98,15 @@ const ProductModal = ({ openModal, closeModal, sweetError }) => {
                 <label htmlFor='product'>Enter the Product Category</label>
                 <select
                   name='category'
-                  className='mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+                  onChange={(value) => setCategory(value)}
+                  className='mt-1 w-full p-2 border border-gray-300 rounded-md
+                  focus:outline-none focus:border-blue-500'
                   id=''>
-                  {categoryList &&
-                    categoryList.map((category) => (
-                      <>
-                        <option value={category._id}>{category.name}</option>
-                      </>
-                    ))}
+                  {categoryList.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className='flex items-center justify-center'>
