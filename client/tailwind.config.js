@@ -3,7 +3,18 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {},
+    fontFamily: {
+      cursive: ["Dancing Script", "cursive"],
+      sourGummy: ["Sour Gummy", "sans-serif"],
+      Roboto: ["Roboto", "sans-serif"],
+    },
     colors: {
+      //frontface
+      darkWhite: "#EEEEEE",
+      orang: "#FF9D3D",
+      shadow: "#F8EDE3",
+
+      //admin Dashboard
       neonBlue: "#00BFFF",
       magenta: "#FF007F",
 
