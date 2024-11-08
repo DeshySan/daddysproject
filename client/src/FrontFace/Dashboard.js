@@ -2,12 +2,13 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import BannerCard from "./BannerCard";
+import Under50 from "./Under50";
 
-const Dashboard = () => {
+const Dashboard = ({ children }) => {
   return (
     <div>
       <Header />
-      <BannerCard />
+      {children}
       <Footer />
     </div>
   );

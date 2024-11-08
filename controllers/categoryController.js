@@ -46,6 +46,32 @@ export const getSingleCategory = async (req, res) => {
     });
   }
 };
+
+export const slugCategory = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const getCategory = await categoryModel.findOne({ slug });
+    if (!getCategory) {
+      res.status(404).send({
+        success: false,
+        message: "Category not found",
+      });
+    } else {
+      res.status(200).send({
+        success: true,
+        message: `Category  has been retrieved successfully`,
+        getCategory,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Internal server error",
+    });
+  }
+};
 export const postCategory = async (req, res) => {
   try {
     const { name, slug } = req.body;

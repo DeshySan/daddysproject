@@ -13,7 +13,8 @@ module.exports = {
       darkWhite: "#EEEEEE",
       orang: "#FF9D3D",
       shadow: "#F8EDE3",
-
+      blue: "#4CC9FE",
+      calmGreen: "#257180",
       //admin Dashboard
       neonBlue: "#00BFFF",
       magenta: "#FF007F",

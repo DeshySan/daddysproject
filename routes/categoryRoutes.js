@@ -4,11 +4,12 @@ import {
   getCategory,
   getSingleCategory,
   postCategory,
+  slugCategory,
   updateCategory,
 } from "../controllers/categoryController.js";
 
 const router = express.Router();
-
+router.get("/get-slug/:slug", slugCategory);
 router.get("/get-category", getCategory);
 router.post("/post-category", postCategory);
 router.put("/update-category/:id", updateCategory);

@@ -4,15 +4,18 @@ import AdminDashboard from "./AdminComponents/AdminDashboard";
 import Category from "./adminPages/Category";
 import Products from "./adminPages/Products";
 import Dashboard from "./FrontFace/Dashboard";
+import HomePage from "./FrontFace/ProductDisplay/HomePage";
+import SoftDrinks from "./FrontFace/ProductDisplay/SoftDrinks";
 
 const App = () => {
   return (
     <div>
       <Routes>
-        <Route path='/' element={<Dashboard />} />
+        <Route path='/' element={<HomePage />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/category' element={<Category />} />
         <Route path='/admin/products' element={<Products />} />
+        <Route path='/daddy/:slug' element={<SoftDrinks />} />
       </Routes>
     </div>
   );
