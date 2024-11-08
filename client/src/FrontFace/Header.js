@@ -19,7 +19,7 @@ const Header = () => {
         setCategories(data.category);
       }
     } catch (error) {
-      sweetError(error);
+      console.log(error);
     }
   };
   useEffect(() => {
