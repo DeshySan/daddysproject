@@ -10,8 +10,7 @@ const SoftDrinks = () => {
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    priceRange: [0, 500],
-    brand: "",
+    priceRanges: [],
   });
   const FetchCategoryID = async () => {
     try {
@@ -32,9 +31,18 @@ const SoftDrinks = () => {
       const { data } = await axios.get(`/api/v1/products/get-product`);
       if (data.success) {
         // Filter products by category
-        const filteredProducts = data.getProducts.filter(
-          (item) => item.category === categoryId
-        );
+        const filteredProducts = data.getProducts.filter((item) => {
+          const isCategoryMatch = item.category === categoryId;
+
+          // Price range filter
+          const isPriceMatch =
+            filters.priceRanges.length === 0 || // If no price range selected, include all products
+            filters.priceRanges.some(
+              ([min, max]) => item.price >= min && item.price <= max
+            );
+
+          return isCategoryMatch && isPriceMatch;
+        });
 
         setCategoryProduct(filteredProducts); // Set filtered products
       }
@@ -47,7 +55,7 @@ const SoftDrinks = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [categoryId]);
+  }, [categoryId, filters]);
 
   useEffect(() => {
     setLoading(true);
@@ -66,9 +74,9 @@ const SoftDrinks = () => {
             <Link className='ml-2 text-red'>{slug && slug}</Link>
           </div>
         </div>
-        <div className='border border-slateGray'></div>
-        <div className='flex'>
-          <div className='sidebar '>
+        <div className='border '></div>
+        <div className='flex m-10 border border-darkWhite rounded-lg overflow-hidden'>
+          <div className='sidebar w-[200px] p-5'>
             <FilterSidebar filters={filters} setFilters={setFilters} />
           </div>
           {loading ? (
@@ -83,7 +91,7 @@ const SoftDrinks = () => {
                     <img
                       src={`http://localhost:1234/${item.image}`}
                       alt='Image'
-                      className='w-64 h-64 object-cover  bg-white rounded-lg shadow-sm p-3'
+                      className='w-[500px] h-[400px] object-cover  bg-white rounded-lg shadow-sm p-3'
                     />
                     <div className='texts text-left w-full ml-9'>
                       <h3 className='text-xl'>{item.name}</h3>
