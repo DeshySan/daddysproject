@@ -10,6 +10,8 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -41,6 +43,27 @@ app.get("/", (req, res) => {
   });
 });
 
+//setting up session
+app.use(
+  session({
+    secret: process.env.JWT_SECRET, // Replace with a secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      httpOnly: true, // Don't allow JavaScript access to the cookie
+    },
+    store: MongoStore.create({ mongoUrl: "mongodb://localhost:27017/daddy" }), // Store sessions in MongoDB
+  })
+);
+
+// Middleware to log the session status (for debugging)
+app.use((req, res, next) => {
+  console.log("Session:", req.session);
+  next();
+});
+
+//Below routes only
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/member", memberRoute);

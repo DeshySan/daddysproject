@@ -4,6 +4,8 @@ import mongoose, { mongo } from "mongoose";
 import { hashPassword } from "./helpers/passwordHelper.js";
 import JWT from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Session } from "express-session";
+import session from "express-session";
 const getMemberNumber = async () => {
   try {
     const counter = await MemberCounter.findOneAndUpdate(
@@ -132,6 +134,10 @@ export const loginMember = async (req, res) => {
     const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
+    if (user && match) {
+    }
+    req.session.userId = user._id;
+    req.session.isAuthenticated = true;
 
     return res.status(200).send({
       success: true,
@@ -145,6 +151,29 @@ export const loginMember = async (req, res) => {
       success: false,
       message: "Internal server error",
       error,
+    });
+  }
+};
+
+export const destroySession = async (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        return res
+          .status(403)
+          .send({ messgae: "Failed to Logout unfortunately" });
+      } else {
+        return res
+          .status(200)
+          .send({ message: "Session destroyed successfully" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error,
+      success: false,
+      message: "Internal server error",
     });
   }
 };

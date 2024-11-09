@@ -6,6 +6,7 @@ import Products from "./adminPages/Products";
 import Dashboard from "./FrontFace/Dashboard";
 import HomePage from "./FrontFace/ProductDisplay/HomePage";
 import SoftDrinks from "./FrontFace/ProductDisplay/SoftDrinks";
+import MemberRegister from "./FrontFace/MemberLogin/MemberRegister";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/admin/category' element={<Category />} />
         <Route path='/admin/products' element={<Products />} />
         <Route path='/daddy/:slug' element={<SoftDrinks />} />
+        <Route path='/member-login' element={<MemberRegister />} />
       </Routes>
     </div>
   );
