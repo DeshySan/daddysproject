@@ -75,12 +75,12 @@ const SoftDrinks = () => {
           </div>
         </div>
         <div className='border '></div>
-        <div className='flex m-10 border border-darkWhite rounded-lg overflow-hidden'>
-          <div className='sidebar w-[200px] p-5'>
+        <div className='flex m-10 border border-darkWhite rounded-lg overflow-hidden '>
+          <div className='sidebar w-[200px] p-5  '>
             <FilterSidebar filters={filters} setFilters={setFilters} />
           </div>
           {loading ? (
-            <div className='flex justify-center items-center min-h-screen'>
+            <div className='flex justify-center items-center w-full h-[calc(100vh-200px)]'>
               <div className='w-24 h-24 border-8 border-t-transparent border-slateGray border-solid rounded-full animate-spin'></div>
             </div>
           ) : (

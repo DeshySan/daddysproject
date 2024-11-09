@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoute.js";
+import memberRoute from "./routes/memberRoute.js";
 import connectDB from "./database/db.js";
 import multer from "multer";
 import path from "path";
@@ -42,3 +43,4 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/member", memberRoute);
