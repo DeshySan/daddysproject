@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { sweetError } from "../adminPages/errorHandler";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   //useStates
   const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
 
+  //redux
+  const { isAuthenticated, loading, error, user } = useSelector(
+    (state) => state.auth
+  );
   //set the active category to red
   const handleLinkClick = (categoryId) => {
     setActiveCategory(categoryId);
@@ -41,9 +46,14 @@ const Header = () => {
         </div>
         <div className='hidden md:flex  '>
           <ul className='flex space-x-6'>
-            <li className='mr-4'>
-              <Link to='/member-login'>Login</Link>
-            </li>
+            {isAuthenticated ? (
+              <h1>{user.fullName}</h1>
+            ) : (
+              <li className='mr-4'>
+                <Link to='/member-login'>Login</Link>
+              </li>
+            )}
+
             <li className='mr-4'>
               <Link>Create Account</Link>
             </li>

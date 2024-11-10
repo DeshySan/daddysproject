@@ -10,11 +10,16 @@ const initialState = {
   error: null,
 };
 
+// Check if there is any saved state in localStorage
+const savedAuthState = localStorage.getItem("authState");
+const initialAuthState = savedAuthState
+  ? JSON.parse(savedAuthState) // If saved state exists, use it
+  : initialState;
 //Create the auth slice
 
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: initialAuthState,
   reducers: {
     loginRequest: (state) => {
       state.loading = true;
@@ -24,6 +29,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.user = action.payload.user;
+      localStorage.setItem("authState", JSON.stringify(state));
     },
     loginFailure: (state, action) => {
       state.loading = false;
@@ -33,6 +39,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.token = null;
       state.user = null;
+      localStorage.removeItem("authState");
     },
   },
 });

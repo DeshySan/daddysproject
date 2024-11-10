@@ -8,6 +8,7 @@ import {
   loginRequest,
   loginSuccess,
 } from "../../Redux/authslice";
+import { useNavigate } from "react-router-dom";
 
 const MemberRegister = () => {
   const [fullName, setFullName] = useState("");
@@ -16,7 +17,7 @@ const MemberRegister = () => {
   const [mobile, setMobile] = useState("");
   const [classification, setClassification] = useState("");
   const [isLogin, setIsLogin] = useState(false);
-
+  const navigate = useNavigate();
   //hooks
   const dispatch = useDispatch();
   const { isAuthenticated, loading, error, user } = useSelector(
@@ -37,7 +38,7 @@ const MemberRegister = () => {
       });
       dispatch(loginSuccess({ token: data.token, user: data.user }));
       localStorage.setItem("authToken", data.token);
-      // getSession();
+      navigate("/");
     } catch (error) {
       dispatch(loginFailure("Invalid credentials"));
       console.log(error);
