@@ -32,14 +32,17 @@ const Header = () => {
           <p className='text-4xl'>🍔</p>
         </div>
         <div>
-          <h1 className='font-cursive text-3xl font-bold'>
-            Liquor <span className='text-orang'>Shop</span>
-          </h1>
+          <Link to='/'>
+            {" "}
+            <h1 className='font-cursive text-3xl font-bold'>
+              Liquor <span className='text-orang'>Shop</span>
+            </h1>
+          </Link>
         </div>
         <div className='hidden md:flex  '>
           <ul className='flex space-x-6'>
             <li className='mr-4'>
-              <Link>Login</Link>
+              <Link to='/member-login'>Login</Link>
             </li>
             <li className='mr-4'>
               <Link>Create Account</Link>
@@ -54,7 +57,9 @@ const Header = () => {
         <div className='md:hidden flex items-center'>
           <ul className='flex space-x-4'>
             <li>
-              <Link className='text-lg'>Login</Link>
+              <Link className='text-lg' to='/member-login'>
+                Login
+              </Link>
             </li>
             <li>
               <Link className='text-lg'>Create Account</Link>
