@@ -155,3 +155,17 @@ export const updateProduct = async (req, res) => {
     });
   }
 };
+
+export const getSingleProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getProducts = await productModel.findById(id);
+    res.status(200).send({
+      success: true,
+      message: "Retirved successfully",
+      getProducts,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

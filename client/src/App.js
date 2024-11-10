@@ -9,6 +9,7 @@ import SoftDrinks from "./FrontFace/ProductDisplay/SoftDrinks";
 import MemberRegister from "./FrontFace/MemberLogin/MemberRegister";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
+import ProductFocus from "./FrontFace/ProductDisplay/ProductFocus";
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
         <Route path='/admin/products' element={<Products />} />
         <Route path='/daddy/:slug' element={<SoftDrinks />} />
         <Route path='/member-login' element={<MemberRegister />} />
+        <Route path='/product-page' element={<ProductFocus />} />
+        <Route path='/product-page/:id' element={<ProductFocus />} />
       </Routes>
     </div>
   );
