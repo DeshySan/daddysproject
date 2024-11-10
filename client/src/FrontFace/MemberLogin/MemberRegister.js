@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import registerImage from "../../assets/bannerImage.jpg"; // Make sure this path is correct
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} from "../../Redux/authslice";
 
 const MemberRegister = () => {
   const [fullName, setFullName] = useState("");
@@ -11,6 +17,11 @@ const MemberRegister = () => {
   const [classification, setClassification] = useState("");
   const [isLogin, setIsLogin] = useState(false);
 
+  //hooks
+  const dispatch = useDispatch();
+  const { isAuthenticated, loading, error, user } = useSelector(
+    (state) => state.auth
+  );
   // Toggle between login and register
   const changeLogin = () => {
     setIsLogin(!isLogin);
@@ -18,16 +29,21 @@ const MemberRegister = () => {
 
   //login member
   const handleLogin = async () => {
+    dispatch(loginRequest());
     try {
       const { data } = await axios.post(`/api/v1/member/login-member`, {
         email,
         password,
       });
-      console.log(data);
+      dispatch(loginSuccess({ token: data.token, user: data.user }));
+      localStorage.setItem("authToken", data.token);
+      // getSession();
     } catch (error) {
+      dispatch(loginFailure("Invalid credentials"));
       console.log(error);
     }
   };
+
   return (
     <div>
       <Dashboard>

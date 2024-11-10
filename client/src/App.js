@@ -7,6 +7,8 @@ import Dashboard from "./FrontFace/Dashboard";
 import HomePage from "./FrontFace/ProductDisplay/HomePage";
 import SoftDrinks from "./FrontFace/ProductDisplay/SoftDrinks";
 import MemberRegister from "./FrontFace/MemberLogin/MemberRegister";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 
 const App = () => {
   return (
