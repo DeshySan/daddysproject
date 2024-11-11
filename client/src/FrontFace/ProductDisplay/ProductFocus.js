@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useCart } from "../useContext/CartContext";
 
 const ProductFocus = () => {
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
+  const { addtoCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (product) {
+      // Add the product to the cart with the selected quantity
+      console.log();
+      addtoCart({ ...product, quantity: parseInt(quantity) });
+    }
+  };
   const getOneProduct = async () => {
     try {
       const { data } = await axios.get(`/api/v1/products/get-product/${id}`);
@@ -77,7 +88,11 @@ const ProductFocus = () => {
             </p>
             <h1 className='text-xl font-semibold p-2'>About this Product</h1>
             <p className='p-2'>{product?.description}</p>
-            <button className='bg-black text-white p-4 w-1/4 mt-4 rounded-sm hover:bg-orang hover:text-black font-semibold hover:scale-105'>
+            <p>{product?._id}</p>
+            <button
+              onClick={handleAddToCart}
+              disabled={!product}
+              className='bg-black text-white p-4 w-1/4 mt-4 rounded-sm hover:bg-orang hover:text-black font-semibold hover:scale-105'>
               Add to Cart
             </button>
             <div className='flex flex-col mt-10'>
