@@ -75,8 +75,8 @@ const CreateProduct = ({ openCreateProduct, setOpenCreateProduct }) => {
   //image
   return (
     <div>
-      <div className='flex  fixed inset-0 justify-center items-center bg-slateGray bg-opacity-50'>
-        <div className='bg-white bg-opacity-90 rounded-md p-4 w-[400px]'>
+      <div className='flex  fixed inset-0 justify-center items-center bg-slateGray bg-opacity-50 overflow-scroll'>
+        <div className='bg-white bg-opacity-90 rounded-md p-4 w-[400px] overflow-auto max-h-[90vh]'>
           <div className='heading text-center'>
             <h2 className='text-4xl font-poppins font-semibold text-slateGray'>
               Create A Product

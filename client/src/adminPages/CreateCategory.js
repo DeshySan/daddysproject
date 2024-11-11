@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateCategory = ({ handleSubmit, value, setValue }) => {
   return (
-    <div className='flex items-center mb-4 w-full'>
+    <div className='flex items-center mb-4 w-full overflow-scroll'>
       <form className='flex flex-col mb-0 w-full' onSubmit={handleSubmit}>
         <label htmlFor='category'>Enter the Category name</label>
         <div className='flex items-center'>

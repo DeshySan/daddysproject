@@ -2,9 +2,12 @@ import categoryModel from "../database/categoryModel.js";
 import productModel from "../database/productModel.js";
 import fs from "fs";
 
+const slugs = (name) => {
+  return name.replace(/\s+/g, "-").toLowerCase();
+};
 export const postProduct = async (req, res) => {
   try {
-    const { name, description, price, category } = req.body;
+    const { name, description, price, category, slug } = req.body;
 
     // Handle image file
     let imageUrl = null;
@@ -27,6 +30,7 @@ export const postProduct = async (req, res) => {
           success: false,
           message: "Product Already Exists",
         });
+        console.log(slugs(name));
       } else {
         const product = new productModel({
           name,
@@ -34,6 +38,7 @@ export const postProduct = async (req, res) => {
           price,
           category: categoryId,
           image: imageUrl,
+          slug: slugs(name),
         });
         await product.save();
         res.status(201).send({
