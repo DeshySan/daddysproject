@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { sweetError } from "../adminPages/errorHandler";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useCart } from "./useContext/CartContext";
 
 const Header = () => {
   //useStates
   const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
-
+  const { totalQuantity } = useCart();
   //redux
   const { isAuthenticated, loading, error, user } = useSelector(
     (state) => state.auth
@@ -20,6 +21,7 @@ const Header = () => {
   const getCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
+      console.log(totalQuantity + "header");
       if (data.success) {
         setCategories(data.category);
       }
@@ -45,9 +47,22 @@ const Header = () => {
           </Link>
         </div>
         <div className='hidden md:flex  '>
-          <ul className='flex space-x-6'>
+          <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
-              <h1>{user.fullName}</h1>
+              <div className='hover-cursor'>
+                <h1 className='group hover-cursor'>
+                  {user.fullName.charAt(0).toUpperCase() +
+                    user.fullName.slice(1, user.fullName.length)}
+                </h1>
+                <div className='hidden absolute group-hover:block bg-darkWhite z-10'>
+                  <li className='hover:bg-white p-4 font-medium'>
+                    <Link to='/settings'>Settings</Link>
+                  </li>
+                  <li className='hover:bg-white p-4 font-medium'>
+                    <Link to='/logout'>Logout</Link>
+                  </li>
+                </div>
+              </div>
             ) : (
               <li className='mr-4'>
                 <Link to='/member-login'>Login</Link>
@@ -59,7 +74,14 @@ const Header = () => {
             </li>
             <li className='mr-4'>🔍</li>
             <li className='mr-4'>
-              <Link>🛍️</Link>
+              <Link>
+                🛍️
+                {totalQuantity > 0 && (
+                  <span className='absolute top-2 right-0 bg-slateGray text-orang text-xs rounded-full px-2 py-1'>
+                    {totalQuantity}
+                  </span>
+                )}
+              </Link>
             </li>
           </ul>
         </div>
@@ -76,7 +98,14 @@ const Header = () => {
             </li>
             <li>🔍</li>
             <li>
-              <Link className='text-lg'>🛍️</Link>
+              <Link className='text-lg'>
+                🛍️
+                {totalQuantity > 0 && (
+                  <span className='absolute top-2 right-0 bg-slateGray text-red text-xs rounded-full px-2 py-1'>
+                    {totalQuantity}
+                  </span>
+                )}
+              </Link>
             </li>
           </ul>
         </div>

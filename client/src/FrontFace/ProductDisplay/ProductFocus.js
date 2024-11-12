@@ -9,6 +9,7 @@ const ProductFocus = () => {
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
   const { id } = useParams();
   const { addtoCart } = useCart();
 
