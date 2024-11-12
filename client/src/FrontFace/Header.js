@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { sweetError } from "../adminPages/errorHandler";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCart } from "./useContext/CartContext";
-
+// import { logout } from "../../Redux/authslice";
+import { logout } from "../Redux/authslice";
 const Header = () => {
   //useStates
   const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
-  const { totalQuantity } = useCart();
+  const { totalQuantity, showLoading, hideLoading } = useCart();
+
   //redux
   const { isAuthenticated, loading, error, user } = useSelector(
     (state) => state.auth
@@ -19,6 +21,7 @@ const Header = () => {
     setActiveCategory(categoryId);
   };
   const getCategory = async () => {
+    showLoading();
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       console.log(totalQuantity + "header");
@@ -27,7 +30,16 @@ const Header = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      hideLoading();
     }
+  };
+
+  //logout
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
   useEffect(() => {
     getCategory();
@@ -59,7 +71,9 @@ const Header = () => {
                     <Link to='/settings'>Settings</Link>
                   </li>
                   <li className='hover:bg-white p-4 font-medium'>
-                    <Link to='/logout'>Logout</Link>
+                    <Link to='/logout' onClick={handleLogout}>
+                      Logout
+                    </Link>
                   </li>
                 </div>
               </div>

@@ -99,7 +99,12 @@ export const CartProvider = ({ children }) => {
 
   //total quantity in the cart
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-  console.log(totalQuantity);
+  //managing the loading states
+
+  const [loading, setLoading] = useState(false);
+
+  const showLoading = () => setLoading(true);
+  const hideLoading = () => setLoading(false);
   return (
     <CartContext.Provider
       value={{
@@ -109,6 +114,9 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         getTotalItems,
         totalQuantity,
+        showLoading,
+        hideLoading,
+        loading,
       }}>
       {children}
     </CartContext.Provider>

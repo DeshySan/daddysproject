@@ -11,7 +11,7 @@ const ProductFocus = () => {
   const [quantity, setQuantity] = useState(1);
 
   const { id } = useParams();
-  const { addtoCart } = useCart();
+  const { addtoCart, showLoading, hideLoading, loading } = useCart();
 
   const handleAddToCart = () => {
     if (product) {
@@ -21,7 +21,9 @@ const ProductFocus = () => {
     }
   };
   const getOneProduct = async () => {
+    showLoading();
     try {
+      console.log(`Loading is ` + loading);
       const { data } = await axios.get(`/api/v1/products/get-product/${id}`);
       if (data.success) {
         setProduct(data.getProducts);
@@ -30,6 +32,8 @@ const ProductFocus = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      hideLoading();
     }
   };
   const getAllProducts = async (category) => {
