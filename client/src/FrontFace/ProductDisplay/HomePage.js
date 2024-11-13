@@ -3,6 +3,7 @@ import BannerCard from "../BannerCard";
 import Dashboard from "../Dashboard";
 import Under50 from "../Under50";
 import Banner from "./Banner";
+import SecondBanner from "./SecondBanner";
 import { useCart } from "../useContext/CartContext";
 
 const HomePage = () => {
@@ -12,6 +13,7 @@ const HomePage = () => {
         <Banner />
         <BannerCard />
         <Under50 />
+        <SecondBanner />
       </Dashboard>
     </div>
   );

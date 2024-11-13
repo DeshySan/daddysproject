@@ -22,6 +22,9 @@ const productSchema = new mongoose.Schema(
     slug: {
       type: String,
     },
+    salesCount: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

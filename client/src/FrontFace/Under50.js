@@ -18,9 +18,10 @@ const Under50 = () => {
           </Link>
         </div>
       </div>
-      <div className='flex'>
+      <div className='flex flex-col'>
         <ProductsUnder50 />
       </div>
+      <div> </div>
     </div>
   );
 };
