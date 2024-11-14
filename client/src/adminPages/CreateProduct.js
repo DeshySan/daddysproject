@@ -10,6 +10,7 @@ const CreateProduct = ({ openCreateProduct, setOpenCreateProduct }) => {
   const [categories, setCategories] = useState(null);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [plu, setPlu] = useState("");
   //handle Image Change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -30,6 +31,7 @@ const CreateProduct = ({ openCreateProduct, setOpenCreateProduct }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("plu", plu);
     formData.append("name", name);
     formData.append("description", description);
     formData.append("price", price);
@@ -83,6 +85,18 @@ const CreateProduct = ({ openCreateProduct, setOpenCreateProduct }) => {
             </h2>
           </div>
           <form action='' onSubmit={handleSubmit}>
+            <div className='mb-4 '>
+              <label htmlFor='name' className='block text-slateGray'>
+                Enter the Product PLU
+              </label>
+              <input
+                type='number'
+                onChange={(e) => setPlu(e.target.value)}
+                value={plu}
+                name='plu'
+                className='mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+              />
+            </div>
             <div className='mb-4 '>
               <label htmlFor='name' className='block text-slateGray'>
                 Enter the Product Name

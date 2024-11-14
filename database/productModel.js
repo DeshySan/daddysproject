@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema(
     salesCount: {
       type: Number,
     },
+    plu: {
+      type: Number,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

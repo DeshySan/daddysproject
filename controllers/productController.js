@@ -7,8 +7,8 @@ const slugs = (name) => {
 };
 export const postProduct = async (req, res) => {
   try {
-    const { name, description, price, category, slug } = req.body;
-
+    const { name, description, price, category, slug, plu } = req.body;
+    console.log(`Name being passed` + name);
     // Handle image file
     let imageUrl = null;
     if (req.file) {
@@ -38,6 +38,7 @@ export const postProduct = async (req, res) => {
           price,
           category: categoryId,
           image: imageUrl,
+          plu,
           slug: slugs(name),
         });
         await product.save();
