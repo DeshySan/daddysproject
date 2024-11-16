@@ -51,16 +51,16 @@ export const getFamily = async (req, res) => {
   }
 };
 
-//the bug in this code is, it will not update the slug
+//the bug in this code is, it will not update the slug and I have removed name as well
 export const updateFamily = async (req, res) => {
   try {
-    const { name, productId } = req.body;
+    const { productId } = req.body;
     const { id } = req.params;
 
     // Ensure id is passed correctly and query by _id or the field you're using as an ID
     const family = await Family.findOneAndUpdate(
       { _id: id }, // Correct filter criteria
-      { name, productId },
+      { productId },
       { new: true }
     );
 
@@ -83,5 +83,19 @@ export const updateFamily = async (req, res) => {
       message: "Internal server error",
       error,
     });
+  }
+};
+
+export const getFamilyProducts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getProducts = await Family.findById(id);
+    res.status(200).send({
+      success: true,
+      getProducts,
+      message: "Products retrieved",
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

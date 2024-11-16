@@ -12,6 +12,7 @@ import { store } from "./Redux/store";
 import ProductFocus from "./FrontFace/ProductDisplay/ProductFocus";
 import Loading from "./helpers/Loading.js";
 import { useCart } from "./FrontFace/useContext/CartContext";
+import Family from "./adminPages/Family.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -24,6 +25,7 @@ const App = () => {
       <GlobalLoading />
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/family' element={<Family />} />
         <Route path='/loading' element={<Loading />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/category' element={<Category />} />

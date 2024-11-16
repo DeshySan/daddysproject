@@ -26,6 +26,7 @@ const upload = multer({ storage: storage });
 router.post("/post-product", upload.single("image"), postProduct);
 router.get("/get-product", getProduct);
 router.get("/get-product/:id", getSingleProduct);
+router.get("/get-product/:id", getSingleProduct);
 router.delete("/delete-product/:id", deleteProduct);
 router.put("/update-product/:id", upload.single("image"), updateProduct);
 export default router;
