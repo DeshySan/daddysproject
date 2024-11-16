@@ -22,6 +22,8 @@ const Family = () => {
       const { data } = await axios.get(`/api/v1/products/get-product`);
       if (data.success) {
         setProduct(data.getProducts);
+        console.log(familyProducts + "familyp");
+        console.log(data);
       } else {
         console.log(data.message);
       }
@@ -57,7 +59,7 @@ const Family = () => {
         const filteredProducts = product?.filter((item) =>
           selectedFamily.productId.includes(item.plu)
         );
-        console.log(filteredProducts + filteredProducts);
+        console.log(filteredProducts + "filteredProducts");
         setFamilyProducts(filteredProducts); // Optionally set it to state if needed
       } else {
         console.log("No products found for this family");
@@ -145,17 +147,24 @@ const Family = () => {
               </tr>
             </thead>
             <tbody>
-              {product?.map((item) => (
-                <tr
-                  className='hover:bg-orang transition-colors'
-                  onClick={() => hanldeAvailableProducts(item.plu)}>
-                  <td className='px-4 py-2'>{item.name}</td>
-                  <td className='px-4 py-2'>Product Name</td>
-                  <td className='px-4 py-2 text-center'>
-                    <input type='checkbox' className='cursor-pointer' />
-                  </td>
-                </tr>
-              ))}
+              {product
+                ?.filter(
+                  (item) =>
+                    !familyProducts?.some(
+                      (familyProduct) => familyProduct.plu === item.plu
+                    )
+                )
+                .map((item) => (
+                  <tr
+                    className='hover:bg-orang transition-colors'
+                    onClick={() => hanldeAvailableProducts(item.plu)}>
+                    <td className='px-4 py-2'>{item.name}</td>
+                    <td className='px-4 py-2'>Product Name</td>
+                    <td className='px-4 py-2 text-center'>
+                      <input type='checkbox' className='cursor-pointer' />
+                    </td>
+                  </tr>
+                ))}
 
               {/* Additional rows can go here */}
             </tbody>
