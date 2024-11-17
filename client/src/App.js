@@ -13,6 +13,7 @@ import ProductFocus from "./FrontFace/ProductDisplay/ProductFocus";
 import Loading from "./helpers/Loading.js";
 import { useCart } from "./FrontFace/useContext/CartContext";
 import Family from "./adminPages/Family.js";
+import CreateFamily from "./adminPages/CreateFamily.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -26,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/family' element={<Family />} />
+        <Route path='/admin/create-family' element={<CreateFamily />} />
         <Route path='/loading' element={<Loading />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/category' element={<Category />} />

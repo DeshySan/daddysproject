@@ -16,6 +16,9 @@ const Family = () => {
   const [selectedFamily0, setSelectedFamily0] = useState(null);
   const [selectedAvailableProduct, setSelectedAvailableProduct] =
     useState(null);
+
+  //color use state
+  const [selectedId, setSelectedId] = useState(null);
   //retirve products for the middle screen
   const retrieveProducts = async () => {
     try {
@@ -50,6 +53,7 @@ const Family = () => {
   //retrieve products which are already in family
 
   const handleFamilyClick = (id) => {
+    setSelectedId(id);
     setSelectedFamily0(id);
     try {
       const selectedFamily = family?.find((fam) => fam._id === id);
@@ -117,7 +121,10 @@ const Family = () => {
             <tbody>
               {family?.map((item) => (
                 <tr
-                  className='hover:bg-orang transition-colors'
+                  key={item._id}
+                  className={`hover:bg-orange-400 transition-colors ${
+                    selectedId === item._id ? "bg-orang" : ""
+                  }`}
                   onClick={() => handleFamilyClick(item._id)}>
                   <td className='px-4 py-2'>{item.id}</td>
                   <td className='px-4 py-2'>{item.name}</td>

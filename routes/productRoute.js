@@ -1,6 +1,7 @@
 import {
   deleteProduct,
   getProduct,
+  getProductSearch,
   getSingleProduct,
   postProduct,
   updateProduct,
@@ -29,4 +30,5 @@ router.get("/get-product/:id", getSingleProduct);
 router.get("/get-product/:id", getSingleProduct);
 router.delete("/delete-product/:id", deleteProduct);
 router.put("/update-product/:id", upload.single("image"), updateProduct);
+router.get("/search", getProductSearch);
 export default router;

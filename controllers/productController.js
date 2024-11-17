@@ -175,3 +175,21 @@ export const getSingleProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getProductSearch = async (req, res) => {
+  try {
+    const { query } = req.query;
+    const products = await productModel
+      .find({
+        name: { $regex: query, $options: "i" },
+      })
+      .sort({ name: 1 });
+    res.status(200).send({
+      success: true,
+      message: "Retrieving Products successfully",
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
