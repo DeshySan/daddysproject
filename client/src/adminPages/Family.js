@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "../FrontFace/Dashboard";
 import { useCart } from "../FrontFace/useContext/CartContext";
 import axios from "axios";
+import Footer from "../AdminComponents/Footer";
 const item = "";
 const Family = () => {
   //middle
@@ -219,6 +220,7 @@ const Family = () => {
           </table>
         </div>
       </div>
+      <Footer />
     </Dashboard>
   );
 };

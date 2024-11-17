@@ -9,6 +9,7 @@ const Dashboard = ({ children }) => {
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 };
