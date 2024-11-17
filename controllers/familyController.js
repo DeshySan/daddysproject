@@ -22,6 +22,7 @@ export const postFamily = async (req, res) => {
     res.status(201).send({
       success: true,
       message: "A new Family has been successfully created",
+      family,
     });
   } catch (error) {
     console.log(error);

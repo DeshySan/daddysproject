@@ -5,11 +5,16 @@ module.exports = {
     extend: {
       animation: {
         marquee: "marquee 7s linear infinite",
+        "slide-left-to-right": "slideLTR 1s ease-in-out ",
       },
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },
+        },
+        slideLTR: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0%)" },
         },
       },
     },
