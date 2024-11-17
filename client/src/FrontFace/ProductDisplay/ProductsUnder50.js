@@ -32,7 +32,7 @@ const ProductsUnder50 = () => {
   }, []);
   return (
     <>
-      <div className='flex justify-center items-center w-full sm:flex-wrap'>
+      <div className='flex justify-center items-center w-full flex-wrap '>
         {products?.slice(0, 5).map((item) => (
           <div className='flex flex-col items-center mx-3 mb-4 p-3 '>
             <img
@@ -52,7 +52,7 @@ const ProductsUnder50 = () => {
           </div>
         ))}
       </div>
-      <div className='relative bg-gradient-to-r from-black via-orang to-red text-white py-16 px-6 md:px-12 rounded-lg shadow-xl overflow-hidden'>
+      <div className='relative bg-gradient-to-r from-black via-orang to-red text-white py-16 px-6 md:px-12 rounded-lg shadow-xl overflow-hidden sm:mx-[-85px]'>
         <div className='absolute inset-0 bg-black opacity-40 rounded-lg'></div>{" "}
         {/* Overlay for better readability */}
         <div className='relative max-w-screen-xl mx-auto flex flex-col items-center text-center space-y-6'>

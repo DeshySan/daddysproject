@@ -4,7 +4,7 @@ import ProductsUnder50 from "./ProductDisplay/ProductsUnder50";
 
 const Under50 = () => {
   return (
-    <div className='mx-20 m-3 p-2'>
+    <div className='mx-0 md:mx-20 sm:mx-20 lg:mx-20 m-3 p-2 mt-10'>
       <div className='flex justify-between'>
         <h2 className='text-2xl font-sourGummy'>
           Bottles <br />

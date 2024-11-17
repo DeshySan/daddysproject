@@ -8,7 +8,7 @@ import { useCart } from "../useContext/CartContext";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
       <Dashboard>
         <Banner />
         <BannerCard />
