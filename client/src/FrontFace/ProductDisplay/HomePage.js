@@ -5,6 +5,7 @@ import Under50 from "../Under50";
 import Banner from "./Banner";
 import SecondBanner from "./SecondBanner";
 import { useCart } from "../useContext/CartContext";
+import HomeFamily from "../Family/HomeFamily";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       <Dashboard>
         <Banner />
         <BannerCard />
+        <HomeFamily />
         <Under50 />
         <SecondBanner />
       </Dashboard>

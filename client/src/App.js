@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AdminDashboard from "./AdminComponents/AdminDashboard";
 import Category from "./adminPages/Category";
@@ -14,6 +14,7 @@ import Loading from "./helpers/Loading.js";
 import { useCart } from "./FrontFace/useContext/CartContext";
 import Family from "./adminPages/Family.js";
 import CreateFamily from "./adminPages/CreateFamily.js";
+import HomeFamily from "./FrontFace/Family/HomeFamily.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='/member-login' element={<MemberRegister />} />
         <Route path='/product-page' element={<ProductFocus />} />
         <Route path='/product-page/:id' element={<ProductFocus />} />
+        <Route path='homefamily' element={<HomeFamily />} />
       </Routes>
     </div>
   );
