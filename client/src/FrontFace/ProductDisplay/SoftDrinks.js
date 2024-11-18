@@ -87,24 +87,25 @@ const SoftDrinks = () => {
             <div className='flex  justify-center items-center w-full sm:flex-wrap'>
               {categoryProduct &&
                 categoryProduct?.map((item) => (
-                  <Link to={`/product-page/${item._id}`}>
-                    <div className='flex flex-col items-center mx-3 mb-4 p-3 '>
+                  <div className='flex flex-col items-center mx-3 mb-4 p-3 relative'>
+                    <Link to={`/product-page/${item._id}`}>
                       <img
                         src={`http://localhost:1234/${item.image}`}
                         alt='Image'
-                        className='w-[500px] h-[400px] object-cover  bg-white rounded-lg shadow-sm p-3'
+                        className='w-[300px] h-[400px] object-cover  bg-white rounded-lg shadow-sm p-3'
                       />
-                      <div className='texts text-left w-full ml-9'>
-                        <h3 className='text-xl'>{item.name}</h3>
-                        <div className='flex items-center space-x-2'>
-                          <p className='text-left'>${item.price}</p>
-                          <p className='text-center line-through text-red'>
-                            ${(item.price - 2).toFixed(2)}
-                          </p>
-                        </div>
+                    </Link>
+                    <button className='orang'>Add to Cart</button>
+                    <div className='texts text-left w-full ml-9'>
+                      <h3 className='text-xl'>{item.name}</h3>
+                      <div className='flex items-center space-x-2'>
+                        <p className='text-left'>${item.price}</p>
+                        <p className='text-center line-through text-red'>
+                          ${(item.price - 2).toFixed(2)}
+                        </p>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
             </div>
           )}
