@@ -16,7 +16,7 @@ const ProductFocus = () => {
   const handleAddToCart = () => {
     if (product) {
       // Add the product to the cart with the selected quantity
-      console.log();
+      console.log(product + `product`);
       addtoCart({ ...product, quantity: parseInt(quantity) });
     }
   };
@@ -110,13 +110,21 @@ const ProductFocus = () => {
 
               <div className='flex flex-row'>
                 {products?.map((item) => (
-                  <Link to={`/product-page/${item._id}`} key={item._id}>
+                  <Link
+                    to={`/product-page/${item._id}`}
+                    key={item._id}
+                    className='relative flex s-center justify-center '>
                     <div className='recc'>
                       <img
                         src={`http://localhost:1234/${item?.image}`}
                         alt=''
                         className='h-[250px] w-[200px] mt-4 ml-5 object-contain shadow-lg'
                       />
+                      <button
+                        onClick={() => handleAddToCart(item)}
+                        className='bg-orang w-[120px] ml-16 absolute bottom-6 p-1 rounded-md text-white'>
+                        Add to Cart
+                      </button>
                       <p className='text-left ml-5'>{item?.name}</p>
                     </div>
                   </Link>

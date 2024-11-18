@@ -3,9 +3,14 @@ import Dashboard from "../Dashboard";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import FilterSidebar from "./FilterSidebar";
+import { useCart } from "../useContext/CartContext";
 
 const SoftDrinks = () => {
   const { slug } = useParams();
+
+  //import add to cart from usecart
+  const { addtoCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
   const [categoryId, SetCategoryID] = useState("");
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +58,11 @@ const SoftDrinks = () => {
     }
   };
 
+  const handleAddToCart = async (product) => {
+    if (product) {
+      addtoCart({ ...product, quantity: parseInt(quantity) });
+    }
+  };
   useEffect(() => {
     fetchProducts();
   }, [categoryId, filters]);
@@ -88,14 +98,18 @@ const SoftDrinks = () => {
               {categoryProduct &&
                 categoryProduct?.map((item) => (
                   <div className='flex flex-col items-center mx-3 mb-4 p-3 relative'>
-                    <Link to={`/product-page/${item._id}`}>
+                    <Link to={`/product-page/${item._id}`} className='relative'>
                       <img
                         src={`http://localhost:1234/${item.image}`}
                         alt='Image'
                         className='w-[300px] h-[400px] object-cover  bg-white rounded-lg shadow-sm p-3'
                       />
                     </Link>
-                    <button className='orang'>Add to Cart</button>
+                    <button
+                      onClick={() => handleAddToCart(item)}
+                      className='bg-orang w-[250px] absolute bottom-16 p-2 rounded-md text-white'>
+                      Add to Cart
+                    </button>
                     <div className='texts text-left w-full ml-9'>
                       <h3 className='text-xl'>{item.name}</h3>
                       <div className='flex items-center space-x-2'>
