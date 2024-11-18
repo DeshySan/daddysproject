@@ -3,7 +3,7 @@ import Dashboard from "../Dashboard";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useCart } from "../useContext/CartContext";
-
+import availability from "../../assets/availability.jpg";
 const ProductFocus = () => {
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
@@ -79,13 +79,24 @@ const ProductFocus = () => {
       <div className='flex  w-full justify-center my-8'>
         <div className='flex w-full max-w-6xl space-x-8'>
           {/* Image section - 50% of the container */}
-          <div className='picture w-1/2'>
-            <img
-              className='h-[700px] w-full object-contain rounded-lg'
-              src={`http://localhost:1234/${product?.image}`}
-              alt='Whiskey'
-            />
-          </div>
+          {product?.image.length > 0 ? (
+            <div className='picture w-1/2'>
+              <img
+                className='h-[700px] w-full object-contain rounded-lg'
+                src={`http://localhost:1234/${product?.image}`}
+                alt='Whiskey'
+              />
+            </div>
+          ) : (
+            <div className='picture w-1/2'>
+              <img
+                className='h-[700px] w-full object-contain rounded-lg'
+                src={availability}
+                alt='Whiskey'
+              />
+            </div>
+          )}
+
           <div className='product-details w-1/2  flex flex-col '>
             <h2 className='text-2xl font-Roboto p-2 font-bold'>
               {product?.name}
@@ -108,12 +119,12 @@ const ProductFocus = () => {
                 You might also like
               </h2>
 
-              <div className='flex flex-row'>
-                {products?.map((item) => (
+              <div className='flex flex-row '>
+                {products?.slice(0, 3).map((item) => (
                   <Link
                     to={`/product-page/${item._id}`}
                     key={item._id}
-                    className='relative flex s-center justify-center '>
+                    className='relative flex s-center justify-center ml-5'>
                     <div className='recc'>
                       <img
                         src={`http://localhost:1234/${item?.image}`}
