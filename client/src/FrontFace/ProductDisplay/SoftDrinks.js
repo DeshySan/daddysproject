@@ -87,7 +87,7 @@ const SoftDrinks = () => {
             <div className='flex  justify-center items-center w-full sm:flex-wrap'>
               {categoryProduct &&
                 categoryProduct?.map((item) => (
-                  <Link>
+                  <Link to={`/product-page/${item._id}`}>
                     <div className='flex flex-col items-center mx-3 mb-4 p-3 '>
                       <img
                         src={`http://localhost:1234/${item.image}`}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCart } from "../useContext/CartContext";
 
 const ProductFocus = () => {
@@ -52,6 +52,9 @@ const ProductFocus = () => {
   useEffect(() => {
     getOneProduct();
   }, []);
+  useEffect(() => {
+    getOneProduct();
+  }, [id]);
   return (
     <Dashboard>
       <div className='bg-gradient-to-r from-orang via-purple-500 to-indigo-500 text-white p-4 flex items-center justify-center overflow-hidden'>
@@ -78,7 +81,7 @@ const ProductFocus = () => {
           {/* Image section - 50% of the container */}
           <div className='picture w-1/2'>
             <img
-              className='h-[700px] w-full object-cover rounded-lg'
+              className='h-[700px] w-full object-contain rounded-lg'
               src={`http://localhost:1234/${product?.image}`}
               alt='Whiskey'
             />
@@ -107,14 +110,16 @@ const ProductFocus = () => {
 
               <div className='flex flex-row'>
                 {products?.map((item) => (
-                  <div className='recc'>
-                    <img
-                      src={`http://localhost:1234/${item?.image}`}
-                      alt=''
-                      className='h-[250px] w-[200px] mt-4 ml-5'
-                    />
-                    <p className='text-left ml-5'>{item?.name}</p>
-                  </div>
+                  <Link to={`/product-page/${item._id}`} key={item._id}>
+                    <div className='recc'>
+                      <img
+                        src={`http://localhost:1234/${item?.image}`}
+                        alt=''
+                        className='h-[250px] w-[200px] mt-4 ml-5 object-contain shadow-lg'
+                      />
+                      <p className='text-left ml-5'>{item?.name}</p>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

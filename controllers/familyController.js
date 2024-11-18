@@ -11,11 +11,18 @@ export const postFamily = async (req, res) => {
     const lastFamily = await Family.findOne().sort({ id: -1 });
     const newId = lastFamily ? lastFamily.id + 1 : 1;
     const slug = generateSlug(name);
+
+    //for image
+    let imageUrl = null;
+    if (req.file) {
+      imageUrl = `uploads/${req.file.filename}`;
+    }
     const family = new Family({
       id: newId,
       name,
       productId,
       slug,
+      image: imageUrl,
     });
 
     await family.save();

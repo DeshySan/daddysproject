@@ -14,6 +14,16 @@ const CreateFamily = () => {
   const [debounceTimeout, setDebounceTimeout] = useState(null);
   const [productList, setProductList] = useState([]);
   const [pId, setPId] = useState([]);
+
+  // New state to handle image
+  const [image, setImage] = useState(null);
+
+  // Handle file input change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Get the first selected file
+    setImage(file); // Save the file to state
+  };
+
   const navigate = useNavigate();
   //handleInput change for search funciton
   const handleInputChange = async (e) => {
@@ -61,24 +71,38 @@ const CreateFamily = () => {
 
   //this will be the one to act as a submit button
   const handleSave = async () => {
-    if (!name || pId.length == 0) {
-      console.log("Name or PLU List is missing");
+    if (!name || pId.length === 0 || !image) {
+      console.log("Name, PLU List or Image is missing");
       return;
     }
+
+    // Create a new FormData object to send the data
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("productId", pId);
+    formData.append("image", image); // Add image file to the form data
+
     try {
-      const { data } = await axios.post(`/api/v1/family/post-family`, {
-        name,
-        productId: pId,
-      });
+      const { data } = await axios.post(
+        `/api/v1/family/post-family`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file uploads
+          },
+        }
+      );
+
       if (data.success) {
-        navigate("/family");
+        navigate("/family"); // Navigate after successful save
       } else {
-        console.log("sth went wrong");
+        console.log("Something went wrong");
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <AdminDashboard>
       <div className='flex w-full'>
@@ -108,6 +132,16 @@ const CreateFamily = () => {
                 className='border border-black p-3 rounded-md text-center'
                 value={searchQuery}
                 onChange={handleInputChange}
+              />
+            </div>
+            <div className='mb-2 flex flex-col w-1/3'>
+              <label htmlFor='image'>Upload Image</label>
+              <input
+                type='file'
+                name='image'
+                accept='image/*'
+                onChange={handleImageChange}
+                className='border border-black p-3 rounded-md text-center'
               />
             </div>
             <div className='mb-2 flex w-1/3 flex-col  items-center'>
