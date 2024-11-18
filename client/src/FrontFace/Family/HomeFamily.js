@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import axios from "axios";
-
+import wine from "../../assets/wine.jpg";
 const HomeFamily = () => {
   const [family, setFamily] = useState(null);
 
@@ -50,6 +50,11 @@ const HomeFamily = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className='mt-8'>
+        <div
+          className='img h-[600px] bg-cover opacity-90'
+          style={{ backgroundImage: `url(${wine})` }}></div>
       </div>
     </>
   );

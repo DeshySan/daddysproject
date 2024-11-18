@@ -15,7 +15,6 @@ const HomePage = () => {
         <BannerCard />
         <HomeFamily />
         <Under50 />
-        <SecondBanner />
       </Dashboard>
     </div>
   );
