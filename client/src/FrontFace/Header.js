@@ -4,27 +4,31 @@ import { sweetError } from "../adminPages/errorHandler";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useCart } from "./useContext/CartContext";
-// import { logout } from "../../Redux/authslice";
 import { logout } from "../Redux/authslice";
+import AddtoCart from "./useContext/AddtoCart";
+
 const Header = () => {
-  //useStates
+  // States
   const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
   const { totalQuantity, showLoading, hideLoading } = useCart();
+  const [cartModal, setCartModal] = useState(false); // Add state to control cart visibility
 
-  //redux
+  // Redux
   const { isAuthenticated, loading, error, user } = useSelector(
     (state) => state.auth
   );
-  //set the active category to red
+
+  // Set active category
   const handleLinkClick = (categoryId) => {
     setActiveCategory(categoryId);
   };
+
+  // Fetch categories
   const getCategory = async () => {
     showLoading();
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
-      console.log(totalQuantity + "header");
       if (data.success) {
         setCategories(data.category);
       }
@@ -35,36 +39,37 @@ const Header = () => {
     }
   };
 
-  //logout
+  // Logout
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
   useEffect(() => {
     getCategory();
   }, []);
+
   return (
-    <>
-      <div className='bg-darkWhite flex justify-between  p-3 '>
+    <div className='relative z-20'>
+      <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0 z-50 p-3'>
         <div className='nepal'>
           <p className='text-4xl'>🍔</p>
         </div>
         <div>
           <Link to='/'>
-            {" "}
             <h1 className='font-cursive text-3xl font-bold'>
               Liquor <span className='text-orang'>Shop</span>
             </h1>
           </Link>
         </div>
-        <div className='hidden md:flex  '>
+        <div className='hidden md:flex'>
           <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
               <div className='hover-cursor'>
                 <h1 className='group hover-cursor'>
                   {user.fullName.charAt(0).toUpperCase() +
-                    user.fullName.slice(1, user.fullName.length)}
+                    user.fullName.slice(1)}
                 </h1>
                 <div className='hidden absolute group-hover:block bg-darkWhite z-10'>
                   <li className='hover:bg-white p-4 font-medium'>
@@ -82,20 +87,22 @@ const Header = () => {
                 <Link to='/member-login'>Login</Link>
               </li>
             )}
-
             <li className='mr-4'>
               <Link>Create Account</Link>
             </li>
             <li className='mr-4'>🔍</li>
+            {/* Cart icon */}
             <li className='mr-4'>
-              <Link>
+              <button
+                onClick={() => setCartModal(!cartModal)}
+                className='relative'>
                 🛍️
                 {totalQuantity > 0 && (
                   <span className='absolute top-2 right-0 bg-slateGray text-orang text-xs rounded-full px-2 py-1'>
                     {totalQuantity}
                   </span>
                 )}
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -124,10 +131,12 @@ const Header = () => {
           </ul>
         </div>
       </div>
+
+      {/* Categories */}
       <div className='hidden flex justify-center items-center md:block'>
         <ul className='flex flex-wrap justify-center text-center'>
           {categories?.map((category) => (
-            <li className='ml-9 mb-2 sm:mb-0'>
+            <li className='ml-9 mb-2 sm:mb-0' key={category._id}>
               <Link
                 to={`/daddy/${category.slug}`}
                 onClick={() => handleLinkClick(category._id)}
@@ -140,7 +149,10 @@ const Header = () => {
           ))}
         </ul>
       </div>
-    </>
+
+      {/* Conditionally render AddtoCart component */}
+      {cartModal && <AddtoCart />}
+    </div>
   );
 };
 
