@@ -151,7 +151,7 @@ const Header = () => {
       </div>
 
       {/* Conditionally render AddtoCart component */}
-      {cartModal && <AddtoCart />}
+      {cartModal && <AddtoCart setCartModal={setCartModal} />}
     </div>
   );
 };
