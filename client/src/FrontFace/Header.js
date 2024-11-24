@@ -51,8 +51,8 @@ const Header = () => {
   }, []);
 
   return (
-    <div className='relative z-20'>
-      <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0 z-50 p-3'>
+    <div className='relative z-20 overflow-y-scroll'>
+      <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0  p-3'>
         <div className='nepal'>
           <p className='text-4xl'>🍔</p>
         </div>
@@ -133,7 +133,7 @@ const Header = () => {
       </div>
 
       {/* Categories */}
-      <div className='hidden flex justify-center items-center md:block'>
+      <div className='hidden relative mt-16 flex justify-center items-center md:block z-50'>
         <ul className='flex flex-wrap justify-center text-center'>
           {categories?.map((category) => (
             <li className='ml-9 mb-2 sm:mb-0' key={category._id}>
