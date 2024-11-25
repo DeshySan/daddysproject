@@ -28,6 +28,10 @@ const memberSchema = new mongoose.Schema(
       required: true,
       default: "Online",
     },
+    memberVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

@@ -15,6 +15,7 @@ import { useCart } from "./FrontFace/useContext/CartContext";
 import Family from "./adminPages/Family.js";
 import CreateFamily from "./adminPages/CreateFamily.js";
 import HomeFamily from "./FrontFace/Family/HomeFamily.js";
+import FacebookLoginButton from "./FrontFace/utils/FacebookLoginButton.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -38,6 +39,7 @@ const App = () => {
         <Route path='/product-page' element={<ProductFocus />} />
         <Route path='/product-page/:id' element={<ProductFocus />} />
         <Route path='homefamily' element={<HomeFamily />} />
+        <Route path='test' element={<FacebookLoginButton />} />
       </Routes>
     </div>
   );

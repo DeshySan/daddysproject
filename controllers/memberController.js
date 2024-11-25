@@ -6,6 +6,7 @@ import JWT from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Session } from "express-session";
 import session from "express-session";
+import { sendConfirmationEmail } from "./helpers/sendEmail.js";
 const getMemberNumber = async () => {
   try {
     const counter = await MemberCounter.findOneAndUpdate(
@@ -72,7 +73,7 @@ export const postMember = async (req, res) => {
     }
     const memberNumber = await getMemberNumber();
     const hashedPassword = await hashPassword(password);
-    console.log(hashedPassword);
+
     const member = new memberModel({
       fullName,
       email,
@@ -83,6 +84,14 @@ export const postMember = async (req, res) => {
     });
 
     await member.save();
+
+    const confirmationToken = JWT.sign(
+      { email: member.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    await sendConfirmationEmail(member.email, confirmationToken);
     res.status(200).send({
       success: true,
       message: "Saved Member in the DB",

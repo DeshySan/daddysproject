@@ -5,9 +5,10 @@ import {
   loginMember,
   postMember,
 } from "../controllers/memberController.js";
+import { confirmEmail } from "../controllers/helpers/sendEmail.js";
 
 const router = express.Router();
-
+router.get("/confirm-email", confirmEmail);
 router.get("/get-member", getAllMembers);
 router.get("/destroy-session", destroySession);
 router.post("/post-member", postMember);

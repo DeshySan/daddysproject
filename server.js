@@ -14,6 +14,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import passport from "passport";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -71,3 +72,20 @@ app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/member", memberRoute);
 app.use("/api/v1/family", familyRoute);
 app.use("/api/v1/adminAPI", adminApiRoutes);
+
+app.get(
+  "/auth/facebook",
+  passport.authenticate("facebook", { scope: ["email"] })
+);
+
+app.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login", // Redirect to login on failure
+    successRedirect: "/", // Redirect to the home page on success
+  }),
+  (req, res) => {
+    // Successfully authenticated
+    res.redirect("/");
+  }
+);
