@@ -29,6 +29,9 @@ const productSchema = new mongoose.Schema(
       type: Number,
       unique: true,
     },
+    batch: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

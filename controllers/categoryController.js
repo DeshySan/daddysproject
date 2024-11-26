@@ -1,7 +1,7 @@
 import express from "express";
 import categoryModel from "../database/categoryModel.js";
 const sluggy = (name) => {
-  return name.replace(/\s/g, "-");
+  return name.replace(/\s/g, "-").toLowerCase();
 };
 export const getCategory = async (req, res) => {
   try {

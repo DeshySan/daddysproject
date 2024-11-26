@@ -135,7 +135,7 @@ const Header = () => {
       {/* Categories */}
       <div className='hidden relative mt-16 flex justify-center items-center md:block z-50'>
         <ul className='flex flex-wrap justify-center text-center'>
-          {categories?.map((category) => (
+          {categories?.slice(0, 12).map((category) => (
             <li className='ml-9 mb-2 sm:mb-0' key={category._id}>
               <Link
                 to={`/daddy/${category.slug}`}
