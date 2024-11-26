@@ -79,7 +79,7 @@ const ProductFocus = () => {
       <div className='flex  w-full justify-center my-8'>
         <div className='flex w-full max-w-6xl space-x-8'>
           {/* Image section - 50% of the container */}
-          {product?.image.length > 0 ? (
+          {product?.image ? (
             <div className='picture w-1/2'>
               <img
                 className='h-[700px] w-full object-contain rounded-lg'
@@ -127,7 +127,11 @@ const ProductFocus = () => {
                     className='relative flex s-center justify-center ml-5'>
                     <div className='recc'>
                       <img
-                        src={`http://localhost:1234/${item?.image}`}
+                        src={
+                          item.image
+                            ? `http://localhost:1234/${item.image}`
+                            : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
+                        }
                         alt=''
                         className='h-[250px] w-[200px] mt-4 ml-5 object-contain shadow-lg'
                       />

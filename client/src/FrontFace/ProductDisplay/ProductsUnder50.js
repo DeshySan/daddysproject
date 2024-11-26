@@ -36,7 +36,11 @@ const ProductsUnder50 = () => {
         {products?.slice(0, 5).map((item) => (
           <div className='flex flex-col items-center mx-3 mb-4 p-3 '>
             <img
-              src={`http://localhost:1234/${item.image}`}
+              src={
+                item.image
+                  ? `http://localhost:1234/${item.image}`
+                  : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
+              }
               alt='Image'
               className='w-64 h-64 object-cover  bg-white rounded-lg shadow-sm p-3'
             />

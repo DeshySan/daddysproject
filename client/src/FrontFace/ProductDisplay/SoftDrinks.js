@@ -100,7 +100,11 @@ const SoftDrinks = () => {
                   <div className='flex flex-col items-center mx-3 mb-4 p-3 relative'>
                     <Link to={`/product-page/${item._id}`} className='relative'>
                       <img
-                        src={`http://localhost:1234/${item.image}`}
+                        src={
+                          item.image
+                            ? `http://localhost:1234/${item.image}`
+                            : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
+                        }
                         alt='Image'
                         className='w-[300px] h-[400px] object-cover  bg-white rounded-lg shadow-sm p-3'
                       />
