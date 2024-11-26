@@ -20,32 +20,70 @@ export const getCategory = async (req, res) => {
     });
   }
 };
+import mongoose from "mongoose";
 
 export const getSingleCategory = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Check if the provided ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid category ID format",
+      });
+    }
+
+    // Find the category by the provided ID
     const getCategory = await categoryModel.findById(id);
+
     if (!getCategory) {
-      res.status(404).send({
+      return res.status(404).send({
         success: false,
         message: "Category not found",
       });
     } else {
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
-        message: `Category  has been retrieved successfully`,
+        message: "Category has been retrieved successfully",
         getCategory,
       });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       error,
       message: "Internal server error",
     });
   }
 };
+
+// export const getSingleCategory = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const getCategory = await categoryModel.findById(id);
+//     if (!getCategory) {
+//       res.status(404).send({
+//         success: false,
+//         message: "Category not found",
+//       });
+//     } else {
+//       res.status(200).send({
+//         success: true,
+//         message: `Category  has been retrieved successfully`,
+//         getCategory,
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       error,
+//       message: "Internal server error",
+//     });
+//   }
+// };
 
 export const slugCategory = async (req, res) => {
   try {

@@ -28,6 +28,7 @@ const Products = () => {
     }
   };
   const fetchCategory = async (categoryID) => {
+    console.log(categoryID + " this is catID");
     if (!categoryID) return;
     if (categories[categoryID]) return;
     try {
@@ -117,7 +118,7 @@ const Products = () => {
                     <td>
                       {categories[value.category]
                         ? categories[value.category]
-                        : "Loading..."}
+                        : "Loading"}
                     </td>
 
                     <td>
