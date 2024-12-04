@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { sweetError } from "../adminPages/errorHandler";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useCart } from "./useContext/CartContext";
 import { logout } from "../Redux/authslice";
 import AddtoCart from "./useContext/AddtoCart";
+import axios from "axios";
 
 const Header = () => {
   // States
@@ -13,11 +12,10 @@ const Header = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const { totalQuantity, showLoading, hideLoading } = useCart();
   const [cartModal, setCartModal] = useState(false); // Add state to control cart visibility
+  const [showDropdown, setShowDropdown] = useState(false); // New state for dropdown visibility
 
   // Redux
-  const { isAuthenticated, loading, error, user } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   // Set active category
   const handleLinkClick = (categoryId) => {
@@ -50,9 +48,18 @@ const Header = () => {
     getCategory();
   }, []);
 
+  // Event handlers to toggle dropdown visibility
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowDropdown(false);
+  };
+
   return (
     <div className='relative z-20 overflow-y-scroll'>
-      <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0  p-3'>
+      <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0 p-3'>
         <div className='ml-[180px]'>
           <p className='text-4xl'>🍔</p>
         </div>
@@ -66,21 +73,31 @@ const Header = () => {
         <div className='hidden md:flex mr-[180px]'>
           <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
-              <div className='hover-cursor'>
+              <div
+                className='relative'
+                onMouseEnter={handleMouseEnter} // Show dropdown when hovering over user section
+                onMouseLeave={handleMouseLeave} // Hide dropdown when mouse leaves user section
+              >
                 <h1 className='group hover-cursor'>
                   {user.fullName.charAt(0).toUpperCase() +
                     user.fullName.slice(1)}
                 </h1>
-                <div className='hidden absolute group-hover:block bg-darkWhite z-10'>
-                  <li className='hover:bg-white p-4 font-medium'>
-                    <Link to='/settings'>Settings</Link>
-                  </li>
-                  <li className='hover:bg-white p-4 font-medium'>
-                    <Link to='/logout' onClick={handleLogout}>
-                      Logout
-                    </Link>
-                  </li>
-                </div>
+                {/* Conditional dropdown */}
+                {showDropdown && (
+                  <div className='absolute bg-darkWhite z-10 shadow-lg mt-2 rounded'>
+                    <li className='hover:bg-white p-4 font-medium'>
+                      <Link to='/settings'>Settings</Link>
+                    </li>
+                    <li className='hover:bg-white p-4 font-medium'>
+                      <Link to='/logout' onClick={handleLogout}>
+                        Logout
+                      </Link>
+                    </li>
+                    <li className='hover:bg-white p-4 font-medium'>
+                      <Link to='/preferences'>Preferences</Link>
+                    </li>
+                  </div>
+                )}
               </div>
             ) : (
               <li className='mr-4'>
