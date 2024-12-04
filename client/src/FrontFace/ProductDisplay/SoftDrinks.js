@@ -102,7 +102,9 @@ const SoftDrinks = () => {
                       <img
                         src={
                           item.image
-                            ? `http://localhost:1234/${item.image}`
+                            ? item.image.split("").length > 40
+                              ? `data:image/png;base64, ${item.image}`
+                              : `http://localhost:1234/${item.image}`
                             : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
                         }
                         alt='Image'

@@ -156,7 +156,7 @@ export const getProductsFromBO = async (req, res) => {
       // Perform a product check
       const familyId = req.body;
       const checkProducts = await axios.get(
-        `https://api.swiftpos.com.au/api/Product?familyId=${familyId}`,
+        `https://api.swiftpos.com.au/api/Product?includeImage=true&familyId=${familyId}`,
         {
           headers: {
             "Content-type": "application/json",
@@ -195,6 +195,7 @@ export const getProductsFromBO = async (req, res) => {
             plu: item.Id,
             category: categoryId._id,
             batch: batch,
+            image: item.Image,
           });
         })
       );

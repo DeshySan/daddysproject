@@ -53,7 +53,7 @@ const Header = () => {
   return (
     <div className='relative z-20 overflow-y-scroll'>
       <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0  p-3'>
-        <div className='nepal'>
+        <div className='ml-[180px]'>
           <p className='text-4xl'>🍔</p>
         </div>
         <div>
@@ -63,7 +63,7 @@ const Header = () => {
             </h1>
           </Link>
         </div>
-        <div className='hidden md:flex'>
+        <div className='hidden md:flex mr-[180px]'>
           <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
               <div className='hover-cursor'>
@@ -88,7 +88,7 @@ const Header = () => {
               </li>
             )}
             <li className='mr-4'>
-              <Link>Create Account</Link>
+              <Link>🧭 </Link>
             </li>
             <li className='mr-4'>🔍</li>
             {/* Cart icon */}
@@ -113,9 +113,6 @@ const Header = () => {
               <Link className='text-lg' to='/member-login'>
                 Login
               </Link>
-            </li>
-            <li>
-              <Link className='text-lg'>Create Account</Link>
             </li>
             <li>🔍</li>
             <li>
