@@ -15,7 +15,6 @@ const categorySchema = new mongoose.Schema({
   },
   batch: {
     type: String,
-    unique: true,
   },
   showOnHomePage: {
     type: Boolean,

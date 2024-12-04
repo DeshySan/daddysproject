@@ -5,6 +5,7 @@ import { useCart } from "./useContext/CartContext";
 import { logout } from "../Redux/authslice";
 import AddtoCart from "./useContext/AddtoCart";
 import axios from "axios";
+import SideBar from "./SideBar";
 
 const Header = () => {
   // States
@@ -56,12 +57,22 @@ const Header = () => {
   const handleMouseLeave = () => {
     setShowDropdown(false);
   };
-
+  const [openSideBar, setOpenSideBar] = useState(false);
   return (
     <div className='relative z-20 overflow-y-scroll'>
       <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0 p-3'>
-        <div className='ml-[180px]'>
-          <p className='text-4xl'>🍔</p>
+        <div className='ml-[100px]'>
+          <p className='text-4xl' onClick={() => setOpenSideBar(true)}>
+            {" "}
+            🍔
+          </p>
+          {openSideBar && (
+            <SideBar
+              openSideBar={openSideBar}
+              setOpenSideBar={setOpenSideBar}
+              categories={categories}
+            />
+          )}
         </div>
         <div>
           <Link to='/'>
@@ -70,7 +81,7 @@ const Header = () => {
             </h1>
           </Link>
         </div>
-        <div className='hidden md:flex mr-[180px]'>
+        <div className='hidden md:flex mr-[100px]'>
           <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
               <div
