@@ -28,8 +28,17 @@ const Header = () => {
     showLoading();
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
+      const response = await axios.get("/api/v1/products/get-product");
+      // console.log(response.data.getProducts);
       if (data.success) {
-        setCategories(data.category);
+        const productCategories = response.data.getProducts.map(
+          (product) => product.category
+        );
+        const filteredCat = data.category.filter((catty) =>
+          productCategories.includes(catty._id)
+        );
+        console.log(filteredCat);
+        setCategories(filteredCat);
       }
     } catch (error) {
       console.log(error);

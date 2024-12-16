@@ -125,7 +125,7 @@ const SoftDrinks = () => {
                         </h3>
                         {isAuthenticated ? (
                           <p className='text-left text-xl font-semibold'>
-                            ${item.price > 0 && item.price - 2}.00
+                            ${item.price > 0 && item.price - 2}
                           </p>
                         ) : (
                           <>
