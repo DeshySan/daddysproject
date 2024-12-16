@@ -3,6 +3,7 @@ import AdminDashboard from "../AdminComponents/AdminDashboard";
 import axios from "axios";
 import Swal from "sweetalert2";
 import CreateCategory from "./CreateCategory";
+import { current } from "@reduxjs/toolkit";
 
 const Category = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,6 +11,9 @@ const Category = () => {
   const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
   const [editName, setEditName] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const [totalPages, setTotalPages] = useState(0); // Total pages
+  const limit = 10; // Items per page
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -36,17 +40,28 @@ const Category = () => {
     });
   };
   //get all categories
-  const getAllCategory = async () => {
+  const getAllCategory = async (currentPage) => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(
+        `/api/v1/category/get-category?page=${currentPage}&limit=${limit}`
+      );
       if (data.success) {
         console.log(data);
         setCategories(data.category);
         closeModal();
         setCategory("");
+        setTotalPages(data.totalPages);
+        setCurrentPage(data.currentPage);
       }
     } catch (error) {
       sweetError(error);
+    }
+  };
+
+  // Handle page changes
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -134,8 +149,8 @@ const Category = () => {
     }
   };
   useEffect(() => {
-    getAllCategory();
-  }, []);
+    getAllCategory(currentPage);
+  }, [currentPage]);
   return (
     <div>
       <AdminDashboard>
@@ -188,7 +203,38 @@ const Category = () => {
               ))}
           </tbody>
         </table>
+        <div className='flex justify-between'>
+          {/* <button
+            onClick={() => handlePageChange(index + 1)}
+            className='p-2 px-2 bg-slateGray'>
+            Previous
+          </button>
+          <button
+            className='p-2 px-3 bg-orang'
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}>
+            Next
+          </button> */}
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}>
+              {index + 1}
+            </button>
+          ))}
 
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className='px-3 py-1 bg-gray-300 rounded disabled:opacity-50'>
+            Next
+          </button>
+        </div>
         {/* Modal */}
         {/* Modal Background */}
         {isModalOpen && (
