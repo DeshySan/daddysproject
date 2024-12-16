@@ -7,6 +7,10 @@ const Checkout = () => {
   const { totalQuantity, showLoading, hideLoading } = useCart();
   const getProducts = JSON.parse(localStorage.getItem("cart"));
   console.log(getProducts);
+  const calculateTotal = (data) => {
+    return data.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  };
+  const totalPrice = calculateTotal(getProducts);
   return (
     <Dashboard>
       <div className='min-h-screeen bg-darkWhite flex justify-center p-4 px-4'>
@@ -57,7 +61,6 @@ const Checkout = () => {
                 />
               </div>
               <div className='flex mt-2'>
-                {" "}
                 <label
                   htmlFor=''
                   className='w-1/2 text-center font-semibold text-lightSlateGray'>
@@ -82,12 +85,28 @@ const Checkout = () => {
                   className='p-2 block w-full border border-lightSlateGray shadow rounded-sm text-lightSlateGray'
                 />
               </div>
+              <div className='flex mt-2'>
+                {" "}
+                <label
+                  htmlFor=''
+                  className='w-full text-center font-semibold text-lightSlateGray'>
+                  Voucher
+                </label>
+                <input
+                  type='text'
+                  placeholder='Enter your Voucher Code'
+                  className='p-2 block w-full border border-lightSlateGray shadow rounded-sm text-lightSlateGray uppercase'
+                />
+                <button className='bg-slateGray p-2 text-white ml-2 w-full'>
+                  Apply Voucher
+                </button>
+              </div>
             </form>
             <div className='flex items-center justify-between m-4 mb-4'>
-              <Link className='bg-slateGray p-4 text-white'>
+              <Link to='/' className='bg-slateGray p-4 text-white'>
                 RETURN TO STORE
               </Link>
-              <Link className='bg-slateGray p-4 text-white'>
+              <Link className='bg-orang p-4 text-black'>
                 Continue to Payment
               </Link>
             </div>
@@ -121,15 +140,19 @@ const Checkout = () => {
           ))}
           <div className='flex justify-between items-center'>
             <p className='text-lightSlateGray'>SubTotal (including GST)</p>
-            <p className='text-lightSlateGray'>{totalQuantity}</p>
+            <p className='text-lightSlateGray'>{totalPrice}</p>
           </div>
           <div className='flex justify-between items-center'>
             <p className='text-lightSlateGray'>Transaction Fees</p>
-            <p className='text-lightSlateGray'>{totalQuantity}</p>
+            <p className='text-lightSlateGray'>
+              {(totalPrice * 0.1).toString().slice(0, 3)}
+            </p>
           </div>
           <div className='flex justify-between items-center '>
             <p className='text-lightSlateGray'>Total</p>
-            <p className='text-lightSlateGray'>{totalQuantity}</p>
+            <p className='text-lightSlateGray'>
+              {totalPrice + totalPrice * 0.1}
+            </p>
           </div>
         </div>
       </div>

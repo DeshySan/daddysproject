@@ -83,7 +83,13 @@ const ProductFocus = () => {
             <div className='picture w-1/2'>
               <img
                 className='h-[700px] w-full object-contain rounded-lg'
-                src={`http://localhost:1234/${product?.image}`}
+                src={
+                  product.image
+                    ? product.image.split("").length > 40
+                      ? `data:image/png;base64, ${product.image}`
+                      : `http://localhost:1234/${product.image}`
+                    : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
+                }
                 alt='Whiskey'
               />
             </div>

@@ -70,7 +70,7 @@ const AddtoCart = ({ setCartModal }) => {
         <h1 className='text-2xl font-bold text-center'>TOTAL: ${total}</h1>
         <Link
           to='/checkout'
-          className='hover:scale-110 transform transition duration-300 block text-xl font-semibold item-center bg-red p-3 w-full text-center text-white'>
+          className='hover:scale-110 transform transition duration-300 block text-xl font-semibold item-center bg-red p-3 w-full text-center text-white mb-10'>
           CHECKOUT
         </Link>
       </div>

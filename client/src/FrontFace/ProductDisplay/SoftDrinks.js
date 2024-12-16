@@ -121,7 +121,7 @@ const SoftDrinks = () => {
                       <h3 className='text-xl'>{item.name}</h3>
                       <div className='flex justify-center flex items-center space-x-2'>
                         <h3 className='text-center text-l font-semibold'>
-                          Members Price
+                          Members Price Only at
                         </h3>
                         {isAuthenticated ? (
                           <p className='text-left text-xl font-semibold'>

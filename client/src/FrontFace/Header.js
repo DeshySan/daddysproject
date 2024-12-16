@@ -71,8 +71,9 @@ const Header = () => {
     <div className='relative z-20 overflow-y-scroll'>
       <div className='bg-darkWhite flex justify-between fixed top-0 left-0 right-0 p-3'>
         <div className='ml-[100px]'>
-          <p className='text-4xl' onClick={() => setOpenSideBar(true)}>
-            {" "}
+          <p
+            className='text-4xl hover:cursor-pointer'
+            onClick={() => setOpenSideBar(true)}>
             🍔
           </p>
           {openSideBar && (
@@ -167,7 +168,7 @@ const Header = () => {
       </div>
 
       {/* Categories */}
-      <div className='hidden relative mt-16 flex justify-center items-center md:block z-50'>
+      <div className='hidden relative mt-16 flex justify-center items-center md:block z-10'>
         <ul className='flex flex-wrap justify-center text-center'>
           {categories?.slice(0, 12).map((category) => (
             <li className='ml-9 mb-2 sm:mb-0' key={category._id}>
