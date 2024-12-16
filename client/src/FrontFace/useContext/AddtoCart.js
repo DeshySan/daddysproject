@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../useContext/CartContext.js";
+import { Link } from "react-router-dom";
 
 const AddtoCart = ({ setCartModal }) => {
   const [products, setProducts] = useState([]);
@@ -67,6 +68,11 @@ const AddtoCart = ({ setCartModal }) => {
           </div>
         ))}
         <h1 className='text-2xl font-bold text-center'>TOTAL: ${total}</h1>
+        <Link
+          to='/checkout'
+          className='hover:scale-110 transform transition duration-300 block text-xl font-semibold item-center bg-red p-3 w-full text-center text-white'>
+          CHECKOUT
+        </Link>
       </div>
     </div>
   );

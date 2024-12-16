@@ -16,6 +16,8 @@ import Family from "./adminPages/Family.js";
 import CreateFamily from "./adminPages/CreateFamily.js";
 import HomeFamily from "./FrontFace/Family/HomeFamily.js";
 import FacebookLoginButton from "./FrontFace/utils/FacebookLoginButton.js";
+import CheckoutForm from "./Checkout/Checkout.js";
+import Checkout from "./Checkout/Checkout.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -40,6 +42,7 @@ const App = () => {
         <Route path='/product-page/:id' element={<ProductFocus />} />
         <Route path='homefamily' element={<HomeFamily />} />
         <Route path='test' element={<FacebookLoginButton />} />
+        <Route path='/checkout' element={<Checkout />} />
       </Routes>
     </div>
   );
