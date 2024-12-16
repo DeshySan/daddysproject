@@ -27,7 +27,10 @@ const Header = () => {
   const getCategory = async () => {
     showLoading();
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(
+        `/api/v1/category/get-category?limit=${100}`
+      );
+      console.log(data);
       const response = await axios.get("/api/v1/products/get-product");
       // console.log(response.data.getProducts);
       if (data.success) {

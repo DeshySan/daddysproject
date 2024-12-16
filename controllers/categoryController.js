@@ -1,15 +1,22 @@
 import express from "express";
 import categoryModel from "../database/categoryModel.js";
+import mongoose from "mongoose";
 const sluggy = (name) => {
   return name.replace(/\s/g, "-").toLowerCase();
 };
 export const getCategory = async (req, res) => {
   try {
-    const category = await categoryModel.find({});
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
+    const category = await categoryModel.find({}).skip(skip).limit(limit);
+    const total = await categoryModel.countDocuments();
     res.status(200).send({
       success: true,
       message: "Successfully retrieiving categories",
       category,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
     });
   } catch (error) {
     console.log(error);
@@ -20,7 +27,6 @@ export const getCategory = async (req, res) => {
     });
   }
 };
-import mongoose from "mongoose";
 
 export const getSingleCategory = async (req, res) => {
   try {
