@@ -20,10 +20,10 @@ const AdminDashboard = ({ children }) => {
                 <Link>🖥️ Dashboard</Link>
               </li>
               <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
-                <Link to='/category'> 🐈Category</Link>
+                <Link to='/admin/category'> 🐈Category</Link>
               </li>
               <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
-                <Link to='/products'> 📔 Products</Link>
+                <Link to='/admin/products'> 📔 Products</Link>
               </li>
               <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
                 <Link> 👦Users</Link>

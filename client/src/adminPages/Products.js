@@ -10,12 +10,24 @@ const Products = () => {
   const [categories, setCategories] = useState({});
   const [category, setCategory] = useState(null);
   const [productID, setProductID] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const [totalPages, setTotalPages] = useState(0); // Total pages
+  const limit = 14; // Items per page
+
+  // Handle page changes
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   const retrieveProducts = async () => {
     try {
       const { data } = await axios.get(`/api/v1/products/get-product`);
       if (data.success) {
         setProduct(data.getProducts);
-
+        setTotalPages(data.totalPages);
+        setCurrentPage(data.currentPage);
         const categoryPromises = data.getProducts.map((product) =>
           fetchCategory(product.category)
         );
@@ -114,7 +126,7 @@ const Products = () => {
                     <td className='py-2'>{index + 1}</td>
                     <td>{value.name}</td>
                     <td>{value.description}</td>
-                    <td>{value.price}</td>
+                    <td>${value.price}</td>
                     <td>
                       {categories[value.category]
                         ? categories[value.category]
@@ -145,6 +157,26 @@ const Products = () => {
               ))}
           </tbody>
         </table>
+        <div>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-orang text-white"
+                  : "bg-slateGray"
+              }`}>
+              {index + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className='px-3 py-1 bg-lightSlateGray rounded disabled:opacity-50'>
+            Next
+          </button>
+        </div>
       </div>
       <ProductModal
         openModal={openModal}

@@ -61,11 +61,17 @@ export const postProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const getProducts = await productModel.find({});
+    const page = parseInt(req.params.page) || 1;
+    const limit = parseInt(req.params.limit) || 15;
+    const skip = (page - 1) * limit;
+    const getProducts = await productModel.find({}).skip(skip).limit(limit);
+    const total = await productModel.countDocuments();
     res.status(200).send({
       success: true,
       message: "Retrieving all products succesfully",
       getProducts,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
     });
   } catch (error) {
     console.log(error);

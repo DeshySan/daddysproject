@@ -13,7 +13,7 @@ const Category = () => {
   const [editName, setEditName] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [totalPages, setTotalPages] = useState(0); // Total pages
-  const limit = 10; // Items per page
+  const limit = 14; // Items per page
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -203,7 +203,7 @@ const Category = () => {
               ))}
           </tbody>
         </table>
-        <div className='flex justify-between'>
+        <div className='flex justify-between mt-2'>
           {/* <button
             onClick={() => handlePageChange(index + 1)}
             className='p-2 px-2 bg-slateGray'>
@@ -221,8 +221,8 @@ const Category = () => {
               onClick={() => handlePageChange(index + 1)}
               className={`px-3 py-1 rounded ${
                 currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+                  ? "bg-orang text-white"
+                  : "bg-slateGray"
               }`}>
               {index + 1}
             </button>
@@ -231,7 +231,7 @@ const Category = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className='px-3 py-1 bg-gray-300 rounded disabled:opacity-50'>
+            className='px-3 py-1 bg-lightSlateGray rounded disabled:opacity-50'>
             Next
           </button>
         </div>
