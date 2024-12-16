@@ -47,9 +47,11 @@ const ProductsUnder50 = () => {
             <div className='texts text-left w-full ml-9'>
               <h3 className='text-xl'>{item.name}</h3>
               <div className='flex items-center space-x-2'>
-                <p className='text-left'>${item.price}</p>
+                <p className='text-left'>
+                  <span>Members Price</span>${item.price}
+                </p>
                 <p className='text-center line-through text-red'>
-                  ${(item.price - 2).toFixed(2)}
+                  ${(item.price + 2).toFixed(2)}
                 </p>
               </div>
             </div>

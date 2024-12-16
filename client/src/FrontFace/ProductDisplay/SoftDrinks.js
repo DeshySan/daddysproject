@@ -4,10 +4,11 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import FilterSidebar from "./FilterSidebar";
 import { useCart } from "../useContext/CartContext";
+import { useSelector } from "react-redux";
 
 const SoftDrinks = () => {
   const { slug } = useParams();
-
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   //import add to cart from usecart
   const { addtoCart } = useCart();
   const [quantity, setQuantity] = useState(1);
@@ -118,11 +119,22 @@ const SoftDrinks = () => {
                     </button>
                     <div className='texts text-left w-full ml-9'>
                       <h3 className='text-xl'>{item.name}</h3>
-                      <div className='flex items-center space-x-2'>
-                        <p className='text-left'>${item.price}</p>
-                        <p className='text-center line-through text-red'>
-                          ${(item.price - 2).toFixed(2)}
-                        </p>
+                      <div className='flex justify-center flex items-center space-x-2'>
+                        <h3 className='text-center text-l font-semibold'>
+                          Members Price
+                        </h3>
+                        {isAuthenticated ? (
+                          <p className='text-left text-xl font-semibold'>
+                            ${item.price > 0 && item.price - 2}.00
+                          </p>
+                        ) : (
+                          <>
+                            {" "}
+                            <p className='text-center line-through text-red'>
+                              ${(item.price + 3).toFixed(2)}
+                            </p>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

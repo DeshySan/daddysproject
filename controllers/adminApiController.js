@@ -154,7 +154,7 @@ export const getProductsFromBO = async (req, res) => {
       const apiKey = apiCheck.apiKey;
 
       // Perform a product check
-      const familyId = req.body;
+      const familyId = req.params.familyId;
       const checkProducts = await axios.get(
         `https://api.swiftpos.com.au/api/Product?includeImage=true&familyId=${familyId}`,
         {
