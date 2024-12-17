@@ -54,7 +54,11 @@ const SoftDrinks = () => {
         });
         console.log(data);
 
-        setCategoryProduct(filteredProducts); // Set filtered products
+        const filteredProductsPriceCheck = filteredProducts.filter(
+          (item) => item.price >= 3
+        );
+
+        setCategoryProduct(filteredProductsPriceCheck); // Set filtered products
       }
     } catch (error) {
       console.log(error);

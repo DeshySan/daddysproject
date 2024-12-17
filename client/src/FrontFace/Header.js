@@ -36,13 +36,14 @@ const Header = () => {
       );
 
       if (data.success) {
-        const productCategories = response.data.getProducts.map(
-          (product) => product.category
+        const productCategories = response.data.getProducts.map((product) =>
+          product.price >= 3 ? product.category : ""
         );
         const filteredCat = data.category.filter((catty) =>
           productCategories.includes(catty._id)
         );
-
+        console.log(response.data.getProducts);
+        console.log("hello");
         setCategories(filteredCat);
       }
     } catch (error) {

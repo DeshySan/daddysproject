@@ -6,6 +6,7 @@ import ProductModal from "./ProductModal";
 import CreateProduct from "./CreateProduct";
 
 const Products = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState({});
   const [category, setCategory] = useState(null);
@@ -20,7 +21,26 @@ const Products = () => {
       setCurrentPage(page);
     }
   };
+  const handleInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
 
+    if (query) {
+      fetchProducts(query);
+    } else {
+      setProduct([]);
+    }
+  };
+  const fetchProducts = async (query) => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/products/search?query=${query}`
+      );
+      setProduct(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const retrieveProducts = async () => {
     try {
       const { data } = await axios.get(`/api/v1/products/get-product`);
@@ -105,6 +125,15 @@ const Products = () => {
             setOpenCreateProduct={setOpenCreateProduct}
           />
         )}
+      </div>
+      <div>
+        <input
+          type='text'
+          placeholder='Search for Products By name or Description '
+          className='block w-full border-b mt-2'
+          value={searchQuery}
+          onChange={handleInputChange}
+        />
       </div>
       <div className='mt-8'>
         <table className='min-w-full'>
