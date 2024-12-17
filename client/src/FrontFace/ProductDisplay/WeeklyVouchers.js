@@ -2,19 +2,23 @@ import React from "react";
 import Dashboard from "../Dashboard";
 import giftcard from "../../assets/giftcard.png";
 import barcode from "../../assets/barcode.png";
+import { Link } from "react-router-dom";
 const WeeklyVouchers = () => {
   return (
     <Dashboard>
       <div
         className='h-[350px] relative '
         style={{ backgroundImage: `url(${giftcard})` }}>
-        <div className='w-[450px] p-4 px-10 ml-40 bg-white absolute mt-16 rounded-md'>
+        <div className='w-[450px] p-4 px-10 ml-40 bg-white absolute mt-16 rounded-md grid'>
           <h1 className='font-semibold text-xl'>GIFT CARDS</h1>
           <p>
             Send a gift card to a loved one today! Shop our range of physical
             gift cards for entertainment, shopping and leisure experiences.
             Delivered to you or a loved one by post.
           </p>
+          <button className='px-10 p-2 bg-orang rounded-md justify-self-end text-white'>
+            <Link to='/gift-cards'> Buy Here</Link>
+          </button>
         </div>
       </div>
       <div className='bg-orang h-[400px] mx-20 mt-2 rounded-lg relative'>

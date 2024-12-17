@@ -332,3 +332,41 @@ export const getProductsFromBO = async (req, res) => {
 //     });
 //   }
 // };
+
+export const postVoucher = async (req, res) => {
+  try {
+    const { vId, member, barcode } = req.body;
+    const apiCheck = await apiModel.findOne().sort({ _id: -1 });
+    const apiKey = apiCheck.apiKey;
+    console.log(vId, member, barcode, apiKey);
+    // const postToSwiftPOS = await axios.post(
+    //   `https://api.swiftpos.com.au/api/Voucher?voucherId=${vId}&Id=${member}&barcode=${barcode}`,
+    //   {
+    //     headers: {
+    //       "Content-type": "application/json",
+    //       accept: "application/json",
+    //       AuthorizationToken: apiKey,
+    //     },
+    //   }
+    // );
+    const postToSwiftPOS = await axios.post(
+      `https://api.swiftpos.com.au/api/Voucher/`,
+      null, // If no body is needed
+      {
+        params: {
+          voucherId: vId,
+          Id: member,
+          barcode: barcode,
+        },
+        headers: {
+          "Content-type": "application/json",
+          accept: "application/json",
+          AuthorizationToken: apiKey, // Assuming 'AuthorizationToken' is correct
+        },
+      }
+    );
+    console.log(postToSwiftPOS);
+  } catch (error) {
+    console.log(error);
+  }
+};

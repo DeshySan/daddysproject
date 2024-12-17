@@ -17,7 +17,7 @@ const Content = () => {
           </p>
         </div>
         <div className='bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer'>
-          <h2 className='text-lg font-semibold text-gray-800'>Users</h2>
+          <h2 className='text-lg font-semibold text-gray-800'>Vouchers</h2>
           <p className='text-sm text-gray-600 mt-2'>
             Some information or stats.
           </p>

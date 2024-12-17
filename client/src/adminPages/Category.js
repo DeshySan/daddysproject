@@ -161,7 +161,7 @@ const Category = () => {
         <table className='min-w-full rounded-lg shadow-md text-center'>
           <thead className='bg-lightSlateGray '>
             <tr>
-              <th className='py-2 px-4 text-center text-sm font-semibold text-gray-600'>
+              <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
                 ID
               </th>
               <th className='py-2 px-4 text-center text-sm font-semibold text-gray-600'>

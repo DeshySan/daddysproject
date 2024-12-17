@@ -20,6 +20,7 @@ import CheckoutForm from "./Checkout/Checkout.js";
 import Checkout from "./Checkout/Checkout.js";
 import GiftCard from "./FrontFace/ProductDisplay/GiftCard.js";
 import WeeklyVouchers from "./FrontFace/ProductDisplay/WeeklyVouchers.js";
+import Vouchers from "./adminPages/Vouchers.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -34,6 +35,7 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/family' element={<Family />} />
         <Route path='/admin/create-family' element={<CreateFamily />} />
+        <Route path='/admin/vouchers' element={<Vouchers />} />
         <Route path='/loading' element={<Loading />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/category' element={<Category />} />
@@ -46,7 +48,7 @@ const App = () => {
         <Route path='test' element={<FacebookLoginButton />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/gift-cards' element={<GiftCard />} />
-        <Route path='/weekly-voucher' element={<WeeklyVouchers />} />
+        <Route path='/weekly-vouchers' element={<WeeklyVouchers />} />
       </Routes>
     </div>
   );
