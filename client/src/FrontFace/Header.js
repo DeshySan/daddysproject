@@ -28,11 +28,13 @@ const Header = () => {
     showLoading();
     try {
       const { data } = await axios.get(
-        `/api/v1/category/get-category?limit=${100}`
+        `/api/v1/category/get-category?limit=${9999}`
       );
       console.log(data);
-      const response = await axios.get("/api/v1/products/get-product");
-      // console.log(response.data.getProducts);
+      const response = await axios.get(
+        `/api/v1/products/get-product?limit=${9999}`
+      );
+      console.log(response.data);
       if (data.success) {
         const productCategories = response.data.getProducts.map(
           (product) => product.category

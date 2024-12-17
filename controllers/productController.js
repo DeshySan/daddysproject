@@ -61,8 +61,8 @@ export const postProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const page = parseInt(req.params.page) || 1;
-    const limit = parseInt(req.params.limit) || 15;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 15;
     const skip = (page - 1) * limit;
     const getProducts = await productModel.find({}).skip(skip).limit(limit);
     const total = await productModel.countDocuments();

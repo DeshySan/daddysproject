@@ -46,7 +46,6 @@ const Category = () => {
         `/api/v1/category/get-category?page=${currentPage}&limit=${limit}`
       );
       if (data.success) {
-        console.log(data);
         setCategories(data.category);
         closeModal();
         setCategory("");
