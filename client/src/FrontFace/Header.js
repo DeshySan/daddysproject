@@ -174,7 +174,7 @@ const Header = () => {
       </div>
 
       {/* Categories */}
-      <div className='hidden relative mt-16 flex justify-center items-center md:block z-10'>
+      <div className='hidden relative mt-16 flex justify-center items-center md:block z-10 bg-orang'>
         <ul className='flex flex-wrap justify-center text-center'>
           {categories?.slice(0, 12).map((category) => (
             <li className='ml-9 mb-2 sm:mb-0' key={category._id}>
@@ -183,11 +183,25 @@ const Header = () => {
                 onClick={() => handleLinkClick(category._id)}
                 className={`${
                   activeCategory === category._id ? "text-orang" : "text-black"
-                } hover:text-orang font-sourGummy text-l`}>
-                {category.name}
+                } hover:text-calmGreen font-sourGummy text-l`}>
+                | {category.name} |
               </Link>
             </li>
           ))}
+          <li className='ml-9 mb-2 sm:mb-0'>
+            <Link
+              TO='/gift-cards'
+              className='font-sourGummy font-semibold text-red hover:text-calmGreen'>
+              | Gift Cards |
+            </Link>
+          </li>
+          <li className='ml-9 mb-2 sm:mb-0'>
+            <Link
+              to='/weekly-vouchers'
+              className='font-sourGummy font-semibold text-red hover:text-calmGreen'>
+              | VOUCHERS THIS WEEK |
+            </Link>
+          </li>
         </ul>
       </div>
 
