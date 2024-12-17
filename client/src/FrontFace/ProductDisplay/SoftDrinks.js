@@ -22,6 +22,7 @@ const SoftDrinks = () => {
     try {
       if (slug) {
         const { data } = await axios.get(`/api/v1/category/get-slug/${slug}`);
+
         if (data.success) {
           SetCategoryID(data.getCategory._id);
           setLoading(false);
@@ -34,7 +35,9 @@ const SoftDrinks = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/products/get-product`);
+      const { data } = await axios.get(
+        `/api/v1/products/get-product?limit=${99999}`
+      );
       if (data.success) {
         // Filter products by category
         const filteredProducts = data.getProducts.filter((item) => {
@@ -49,6 +52,7 @@ const SoftDrinks = () => {
 
           return isCategoryMatch && isPriceMatch;
         });
+        console.log(data);
 
         setCategoryProduct(filteredProducts); // Set filtered products
       }

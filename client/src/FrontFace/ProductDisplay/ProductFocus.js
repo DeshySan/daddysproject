@@ -39,7 +39,9 @@ const ProductFocus = () => {
   const getAllProducts = async (category) => {
     // in the future, I can filter this in the server side to make it process much smoothly
     try {
-      const { data } = await axios.get(`/api/v1/products/get-product`);
+      const { data } = await axios.get(
+        `/api/v1/products/get-product?limit=${9999}`
+      );
 
       const filterProduct = data.getProducts.filter(
         (product) => product.category == category

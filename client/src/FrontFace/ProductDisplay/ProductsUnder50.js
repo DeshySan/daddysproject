@@ -9,17 +9,23 @@ const ProductsUnder50 = () => {
   const fetchProducts = async () => {
     showLoading();
     try {
-      const { data } = await axios.get(`/api/v1/products/get-product`);
+      const { data } = await axios.get(
+        `/api/v1/products/get-product?limit=${999}`
+      );
       if (data.success) {
         const filteredProducts = data.getProducts?.filter(
-          (item) => item.price < 55
+          (item) => item.price < 55 && item.price > 3
         );
         const bestSellingProducts = data.getProducts.sort(
           (a, b) => b.salesCount - a.salesCount
         );
 
+        const filteredBestSelling = bestSellingProducts.filter(
+          (item) => item.price >= 10
+        );
+
         setProducts(filteredProducts);
-        setBestSellers(bestSellingProducts);
+        setBestSellers(filteredBestSelling);
       }
     } catch (error) {
       console.log(error);
@@ -47,8 +53,9 @@ const ProductsUnder50 = () => {
             <div className='texts text-left w-full ml-9'>
               <h3 className='text-xl'>{item.name}</h3>
               <div className='flex items-center space-x-2'>
-                <p className='text-left'>
-                  <span>Members Price</span>${item.price}
+                <p className='text-left font-bold text-xl'>
+                  <span className='font-semibold'>Members Price :</span>$
+                  {item.price}
                 </p>
                 <p className='text-center line-through text-red'>
                   ${(item.price + 2).toFixed(2)}
@@ -89,7 +96,13 @@ const ProductsUnder50 = () => {
           {bestSellers?.slice(0, 5).map((item) => (
             <div className='flex flex-col items-center mx-3 mb-4 p-3 '>
               <img
-                src={`http://localhost:1234/${item.image}`}
+                src={
+                  item.image
+                    ? item.image.split("").length > 40
+                      ? `data:image/png;base64, ${item.image}`
+                      : `http://localhost:1234/${item.image}`
+                    : "https://media.tenor.com/Rwl2AydK4z4AAAAe/not-available-fam-na.png"
+                }
                 alt='Image'
                 className='w-64 h-64 object-cover  bg-white rounded-lg shadow-sm p-3'
               />

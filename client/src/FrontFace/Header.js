@@ -28,13 +28,13 @@ const Header = () => {
     showLoading();
     try {
       const { data } = await axios.get(
-        `/api/v1/category/get-category?limit=${9999}`
+        `/api/v1/category/get-category?limit=${999}`
       );
-      console.log(data);
+
       const response = await axios.get(
-        `/api/v1/products/get-product?limit=${9999}`
+        `/api/v1/products/get-product?limit=${10000}`
       );
-      console.log(response.data);
+
       if (data.success) {
         const productCategories = response.data.getProducts.map(
           (product) => product.category
@@ -42,7 +42,7 @@ const Header = () => {
         const filteredCat = data.category.filter((catty) =>
           productCategories.includes(catty._id)
         );
-        console.log(filteredCat);
+
         setCategories(filteredCat);
       }
     } catch (error) {
