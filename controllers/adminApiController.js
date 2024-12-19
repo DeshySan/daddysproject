@@ -3,6 +3,7 @@ import axios from "axios";
 import apiModel from "../database/apiModel.js";
 import categoryModel from "../database/categoryModel.js";
 import productModel from "../database/productModel.js";
+import Vouchers from "../database/Vouchers.js";
 
 //restructure and optimise better- to be done in the beta testing
 export const getAPIkeyController = async (req, res) => {
@@ -333,40 +334,155 @@ export const getProductsFromBO = async (req, res) => {
 //   }
 // };
 
+// export const postVoucher = async (req, res) => {
+//   const apiKey;
+//   try {
+//     const current_date = new Date();
+//     const { vId, member, barcode } = req.body;
+//     const apiValidation = await apiModel.findOne().sort({ _id: -1 });
+//     const timeStamp = new Date(apiValidation.createdAt);
+//     const timeDifference = (current_date - timeStamp) / 3600000;
+
+//     if (timeDifference > 10) {
+//       await getAPIkeyController(req, res);
+//     } else {
+//       const apiCheck = await apiModel.findOne().sort({ _id: -1 });
+//        apiKey = apiCheck.apiKey;
+//     }
+
+//     // const postToSwiftPOS = await axios.post(
+//     //   `https://api.swiftpos.com.au/api/Voucher?voucherId=${vId}&Id=${member}&barcode=${barcode}`,
+//     //   {
+//     //     headers: {
+//     //       "Content-type": "application/json",
+//     //       accept: "application/json",
+//     //       AuthorizationToken: apiKey,
+//     //     },
+//     //   }
+//     // );
+//     const postToSwiftPOS = await axios.post(
+//       `https://api.swiftpos.com.au/api/Voucher/`,
+//       null, // If no body is needed
+//       {
+//         params: {
+//           voucherId: vId,
+//           Id: member,
+//           barcode: barcode,
+//         },
+//         headers: {
+//           "Content-type": "application/json",
+//           accept: "application/json",
+//           AuthorizationToken: apiKey, // Assuming 'AuthorizationToken' is correct
+//         },
+//       }
+//     );
+//     console.log(postToSwiftPOS);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// export const postVoucher = async (req, res) => {
+//   const current_date = new Date();
+//   let apiKey; // Declare apiKey outside
+//   try {
+//     const apiValidation = await apiModel.findOne().sort({ _id: -1 });
+//     const timeStamp = new Date(apiValidation.createdAt);
+//     const timeDifference = (current_date - timeStamp) / 3600000;
+
+//     if (timeDifference > 10) {
+//       // If API key is expired, fetch a new one
+//       await getAPIkeyController(req, res);
+//       const newApiCheck = await apiModel.findOne().sort({ _id: -1 });
+//       apiKey = newApiCheck.apiKey; // Ensure apiKey is assigned after fetching
+//     } else {
+//       // If the key is still valid, use it
+//       const apiCheck = await apiModel.findOne().sort({ _id: -1 });
+//       apiKey = apiCheck.apiKey;
+//     } // Assign the valid API key
+//     console.log(apiKey);
+//     const vid = 2;
+//     const mid = 10;
+//     // Post to SwiftPOS
+//     const postToSwiftPOS = await axios.post(
+//       `https://api.swiftpos.com.au/api/Voucher/voucherId=${vid}&id=${mid}`,
+//       {}, // No body, use params
+
+//       // params: {
+//       //   voucherId: vId,
+//       //   Id: member,
+//       //   barcode: barcode,
+//       // },
+//       {
+//         headers: {
+//           "Content-type": "application/json",
+//           accept: "application/json",
+//           AuthorizationToken: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcklkIjo3NDk4MTEzNSwiY2xpZW50SWQiOjY3MTc1MywiY2xlcmtJZCI6MCwic2lnbmF0dXJlIjoiTVNMIHN1cHBvcnQiLCJuYmYiOjE3MzQ1NjMyMzQsImV4cCI6MTczNDYwNjQzNCwiaWF0IjoxNzM0NTYzMjM0LCJpc3MiOiJTd2lmdFBPU0Nsb3VkIiwiYXVkIjoiU3dpZnRQT1NDbG91ZCJ9.5LNue4-XR7RuJY_WvXGcBVw5ZCO_Cjf-Xq8Y6WFWVo0`,
+//         },
+//       }
+//     );
+
+//     console.log(postToSwiftPOS.data); // Log the response data
+//     res.status(200).json(postToSwiftPOS.data); // Respond with data from SwiftPOS
+//   } catch (error) {
+//     console.error(error); // Log the error
+//     console.error("Error Response:", error.response?.data || error.message);
+//     res
+//       .status(500)
+//       .json({ error: "An error occurred while processing the request." }); // Respond with an error message
+//   }
+// };
+
 export const postVoucher = async (req, res) => {
+  const current_date = new Date();
   try {
-    const { vId, member, barcode } = req.body;
-    const apiCheck = await apiModel.findOne().sort({ _id: -1 });
-    const apiKey = apiCheck.apiKey;
-    console.log(vId, member, barcode, apiKey);
-    // const postToSwiftPOS = await axios.post(
-    //   `https://api.swiftpos.com.au/api/Voucher?voucherId=${vId}&Id=${member}&barcode=${barcode}`,
-    //   {
-    //     headers: {
-    //       "Content-type": "application/json",
-    //       accept: "application/json",
-    //       AuthorizationToken: apiKey,
-    //     },
-    //   }
-    // );
-    const postToSwiftPOS = await axios.post(
-      `https://api.swiftpos.com.au/api/Voucher/`,
-      null, // If no body is needed
-      {
-        params: {
-          voucherId: vId,
-          Id: member,
-          barcode: barcode,
-        },
-        headers: {
-          "Content-type": "application/json",
-          accept: "application/json",
-          AuthorizationToken: apiKey, // Assuming 'AuthorizationToken' is correct
-        },
-      }
-    );
-    console.log(postToSwiftPOS);
+    const { vId, mId, barcode } = req.body;
+    // const vId = 2;
+    // const mId = 10;
+    // const barcode = 234578934567834;
+    const apiValidation = await apiModel.findOne().sort({ _id: -1 });
+    const timeStamp = new Date(apiValidation.createdAt);
+    const timeDifference = (current_date - timeStamp) / 3600000;
+
+    if (timeDifference > 10) {
+      await getAPIkeyController(req, res);
+    } else {
+      const apiCheck = await apiModel.findOne().sort({ _id: -1 });
+      const apiKey = apiCheck.apiKey;
+      const { data } = await axios.post(
+        `https://api.swiftpos.com.au/api/Voucher?voucherId=${vId}&id=${mId}&barcode=${barcode}`,
+        {}, // No data body needed for this request
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            AuthorizationToken: apiKey, // Token in Authorization header
+          },
+        }
+      );
+
+      // res.status(201).send({
+      //   message: `Voucher with Barcode: ${barcode} for member ${mId} succesffuly created`,
+      //   data,
+      // });
+      const saveVoucher = new Vouchers({
+        id: vId,
+        barcode: barcode,
+        member: mId,
+      });
+
+      await saveVoucher.save();
+      res.status(201).send({
+        success: true,
+        message: "Voucher stored in Daddys ecomm",
+        saveVoucher,
+      });
+    }
   } catch (error) {
-    console.log(error);
+    console.error("Error occurred:", error.response?.data || error.message);
+    res.status(500).send({
+      message: "Error occurred",
+      error: error.response?.data || error.message,
+    });
   }
 };
