@@ -8,6 +8,9 @@ const voucherSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+    voucherDescription: {
+      type: String,
+    },
     balance: {
       type: Number,
     },
