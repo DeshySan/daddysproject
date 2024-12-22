@@ -1,12 +1,35 @@
 import React, { useState } from "react";
 import AdminDashboard from "../AdminComponents/AdminDashboard";
 import Barcode from "react-barcode";
+import axios from "axios";
 
 const Vouchers = () => {
   const [inputValue, setInputValue] = useState(""); // State to track input value
+  const [vId, setVID] = useState(0);
+  const [memberId, setMemberId] = useState(0);
+  const [promoVoucher, setPromoVoucher] = useState("");
 
+  //save to the back office and this db
+  const handleIssue = async () => {
+    const { data } = await axios.post(`/api/v1/adminAPI/post-vouchers`, {
+      vId,
+      mId: memberId,
+      barcode: inputValue,
+    });
+    console.log(data);
+  };
+  //functions
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+    let barcodeText = event.target.value;
+    setInputValue(barcodeText);
+  };
+
+  const clearInput = () => {
+    setInputValue(""); // Reset the state
+  };
+  const randomBarcode = () => {
+    const test = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    setInputValue(test);
   };
   return (
     <AdminDashboard>
@@ -21,28 +44,45 @@ const Vouchers = () => {
               type='number'
               placeholder='Enter your V ID'
               className='border border-red block p-2 w-1/2'
+              value={vId}
+              onChange={(e) => setVID(e.target.value)}
             />
             <input
               type='number'
               placeholder='Enter your MemberID'
               className='border border-red block p-2 ml-4 w-1/2'
+              value={memberId}
+              onChange={(e) => setMemberId(e.target.value)}
             />
             <input
               type='text'
-              placeholder='Enter the promotional Discription'
-              className='border border-red block p-2 ml-4 w-full '
+              placeholder='Enter the promotional Description'
+              className='border border-red block p-2 ml-4 w-full'
             />
           </div>
-          <button className='p-3 bg-slateGray mt-4 mb-2'>
+          <button
+            className='p-3 bg-slateGray mt-4 mb-2'
+            onClick={randomBarcode}>
             Click here to Generate a Barcode
           </button>
           <input
             type='text'
             placeholder='Voucher Barcode'
-            className='border border-red block p-2 ml-4 w-1/2 '
+            className='border border-red block p-2 ml-4 w-1/2'
+            value={inputValue}
             onChange={handleInputChange}
-          />
-          <Barcode value={inputValue} />
+          />{" "}
+          <button
+            onClick={clearInput}
+            className='p-2 bg-slateGray text-black mt-4'>
+            Clear Barcode
+          </button>
+          <button
+            onClick={handleIssue}
+            className='p-2 bg-slateGray text-white mt-4'>
+            Issue Voucher
+          </button>
+          <Barcode value={inputValue || " "} />
         </div>
       </div>
       <table className='min-w-full rounded-lg shadow-md text-center'>

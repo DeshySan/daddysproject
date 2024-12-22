@@ -461,10 +461,10 @@ export const postVoucher = async (req, res) => {
         }
       );
 
-      // res.status(201).send({
-      //   message: `Voucher with Barcode: ${barcode} for member ${mId} succesffuly created`,
-      //   data,
-      // });
+      res.status(201).send({
+        message: `Voucher with Barcode: ${barcode} for member ${mId} succesffuly created`,
+        data,
+      });
       const saveVoucher = new Vouchers({
         id: vId,
         barcode: barcode,
@@ -472,11 +472,11 @@ export const postVoucher = async (req, res) => {
       });
 
       await saveVoucher.save();
-      res.status(201).send({
-        success: true,
-        message: "Voucher stored in Daddys ecomm",
-        saveVoucher,
-      });
+      // res.status(201).send({
+      //   success: true,
+      //   message: "Voucher stored in Daddys ecomm",
+      //   saveVoucher,
+      // });
     }
   } catch (error) {
     console.error("Error occurred:", error.response?.data || error.message);
