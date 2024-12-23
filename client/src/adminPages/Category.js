@@ -7,6 +7,7 @@ import { current } from "@reduxjs/toolkit";
 
 const Category = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [batchName, setBatchName] = useState("");
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
@@ -147,12 +148,64 @@ const Category = () => {
       sweetError(error);
     }
   };
+  const handleCategories = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/adminAPI/get-category?batch=${batchName}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteCategories = async () => {
+    try {
+      console.log(batchName);
+      const { data } = await axios.delete(`/api/v1/adminAPI/delete-cat`, {
+        data: { batch: batchName },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getAllCategory(currentPage);
   }, [currentPage]);
   return (
     <div>
       <AdminDashboard>
+        <div className='flex justify-center items-center flex-col'>
+          <div>
+            <input
+              type='text'
+              placeholder='Batch Name'
+              className='border border-orang p-1'
+              // value={batchName}
+              // onChange={(e) => setBatchName(e.target.value)}
+            />
+            <button
+              className='bg-orang text-white p-2'
+              onClick={handleCategories}>
+              Get categories from Back Office
+            </button>
+          </div>
+          <div>
+            <input
+              type='text'
+              placeholder='Batch Name'
+              className='border border-orang p-1'
+              value={batchName}
+              onChange={(e) => setBatchName(e.target.value)}
+            />
+            <button
+              onClick={handleDeleteCategories}
+              className='bg-slateGray text-white p-2 ml-4'>
+              Delete All Categories
+            </button>
+          </div>
+        </div>
         <CreateCategory
           handleSubmit={handleSubmit}
           value={name}

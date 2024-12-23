@@ -28,9 +28,9 @@ const Vouchers = () => {
     setInputValue(""); // Reset the state
   };
   const randomBarcode = () => {
-    const test = Math.floor(
-      440000000000 + Math.random() * 9000000000
-    ).toString();
+    //To make the voucher always unique timestamps is used and to make it look like it is from SwiftPOS, we use number 44 infront
+    const timestampInSeconds = Math.floor(Date.now() / 1000);
+    const test = Math.floor(440000000000 + timestampInSeconds).toString();
     setInputValue(test);
   };
 

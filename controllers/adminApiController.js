@@ -45,13 +45,13 @@ export const getCategoryFromBO = async (req, res) => {
   const current_date = new Date();
   try {
     // Check if 'batch' exists in req.body
-    if (!req.body.batch) {
+    if (!req.query.batch) {
       return res.status(400).send({
         success: false,
         message: "Batch field is required in the request body.",
       });
     }
-    const batch = req.body.batch.replace(/\s/g, "-").toLowerCase();
+    const batch = req.query.batch.replace(/\s/g, "-").toLowerCase();
     const getBatch = await categoryModel.findOne({ batch });
     if (getBatch) {
       return res.status(404).send({
@@ -106,7 +106,7 @@ export const deleteCategorybyBatch = async (req, res) => {
     const response = await categoryModel.deleteMany({ batch });
     res.status(200).send({
       success: true,
-      message: `Successfully deleted the first pull batch data`,
+      message: `Successfully deleted the first pull batch data ${batch}`,
     });
   } catch (error) {
     console.log(error);
