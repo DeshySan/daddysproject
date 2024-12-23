@@ -10,8 +10,10 @@ const WeeklyVouchers = () => {
   const fetchPromotionalVoucher = async () => {
     try {
       const { data } = await axios.get(`/api/v1/adminAPI/get-voucher`);
-      console.log(data.voucher[0].barcode);
-      setVoucherDetail(data.voucher);
+      const filterVoucher = data.voucher.filter(
+        (item) => item.displayPromotional === 1
+      );
+      setVoucherDetail(filterVoucher);
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  activeVoucher,
   deleteCategorybyBatch,
   deleteProductsbyBatch,
   deleteVouchers,
@@ -22,4 +23,5 @@ router.post("/post-vouchers", postVoucher);
 router.get("/get-voucher", getVoucher);
 router.get("/get-vouchers", getVouchers);
 router.delete("/delete-vouchers/:id", deleteVouchers);
+router.patch("/toggle-voucher/:id", activeVoucher);
 export default router;

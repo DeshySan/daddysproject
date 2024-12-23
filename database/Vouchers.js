@@ -20,6 +20,10 @@ const voucherSchema = new mongoose.Schema(
     member: {
       type: Number,
     },
+    displayPromotional: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

@@ -7,6 +7,7 @@ import CreateProduct from "./CreateProduct";
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [batchName, setBatchName] = useState("");
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState({});
   const [category, setCategory] = useState(null);
@@ -108,8 +109,60 @@ const Products = () => {
       console.log(error);
     }
   };
+  const handleProducts = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/adminAPI/get-products?batch=${batchName}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleProductDeletion = async () => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/adminAPI/delete-batch-products`,
+        {
+          data: { batch: batchName },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AdminDashboard>
+      <div className='flex justify-center items-center flex-col'>
+        <div>
+          <input
+            type='text'
+            placeholder='Batch Name'
+            className='border border-orang p-1'
+            value={batchName}
+            onChange={(e) => setBatchName(e.target.value)}
+          />
+          <button className='bg-orang text-white p-2' onClick={handleProducts}>
+            Get products from Back Office
+          </button>
+        </div>
+        <div>
+          <input
+            type='text'
+            placeholder='Batch Name'
+            className='border border-orang p-1'
+            value={batchName}
+            onChange={(e) => setBatchName(e.target.value)}
+          />
+          <button
+            onClick={handleProductDeletion}
+            className='bg-slateGray text-white p-2 ml-4'>
+            Delete All Products
+          </button>
+        </div>
+      </div>
       <div className='flex justify-center'>
         <button
           onClick={() => setOpenCreateProduct(true)}

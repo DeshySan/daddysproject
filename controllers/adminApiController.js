@@ -143,13 +143,13 @@ export const getProductsFromBO = async (req, res) => {
   const current_date = new Date();
   try {
     // Check if batch exists in req.body
-    if (!req.body.batch) {
+    if (!req.query.batch) {
       return res.status(400).send({
         success: false,
         message: "Batch field is required in the request body.",
       });
     }
-    const batch = req.body.batch.replace(/\s/g, "-").toLowerCase();
+    const batch = req.query.batch.replace(/\s/g, "-").toLowerCase();
 
     // Check API Validation first
     const apiValidation = await apiModel.findOne().sort({ _id: -1 });
@@ -497,7 +497,7 @@ export const postVoucher = async (req, res) => {
 
 export const getVoucher = async (req, res) => {
   try {
-    const voucher = await Vouchers.find().sort({ _id: -1 }).limit(1);
+    const voucher = await Vouchers.find();
     res.status(200).send({
       success: true,
       message: "Voucher retrieved successfully",
@@ -528,6 +528,32 @@ export const deleteVouchers = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Voucher deleted",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const activeVoucher = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const voucher = await Vouchers.findById(id);
+
+    if (!voucher) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Voucher not found" });
+    }
+
+    // Toggle the displayPromotional field (if it's 0, set to 1; if 1, set to 0)
+    voucher.displayPromotional = voucher.displayPromotional === 0 ? 1 : 0;
+
+    // Save the updated voucher
+    await voucher.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Voucher promotion status toggled successfully",
+      voucher,
     });
   } catch (error) {
     console.log(error);

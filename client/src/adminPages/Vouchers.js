@@ -8,6 +8,7 @@ const Vouchers = () => {
   const [vId, setVID] = useState(0);
   const [memberId, setMemberId] = useState(0);
   const [promoVoucher, setPromoVoucher] = useState([]);
+  const [isActive, setIsActive] = useState(false);
 
   //save to the back office and this db
   const handleIssue = async () => {
@@ -54,6 +55,43 @@ const Vouchers = () => {
       console.log(error);
     }
   };
+  // const voucherDisplay = async (id) => {
+  //   try {
+  //     const { data } = await axios.patch(
+  //       `/api/v1/adminAPI/toggle-voucher/${id}`
+  //     );
+  //     console.log(data);
+  //     if (data.success) {
+  //       setIsActive(!isActive); // Toggle the button state based on the response
+  //       getVouchers();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const voucherDisplay = async (id) => {
+    try {
+      const { data } = await axios.patch(
+        `/api/v1/adminAPI/toggle-voucher/${id}`
+      );
+      if (data.success) {
+        setPromoVoucher((prev) =>
+          prev.map((voucher) =>
+            voucher._id === id
+              ? {
+                  ...voucher,
+                  displayPromotional: voucher.displayPromotional === 0 ? 1 : 0,
+                }
+              : voucher
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getVouchers();
   }, []);
@@ -125,6 +163,9 @@ const Vouchers = () => {
               Voucher Name
             </th>
             <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
+              Display on Web
+            </th>
+            <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
               Status
             </th>
           </tr>
@@ -134,7 +175,15 @@ const Vouchers = () => {
             <tr className=''>
               <td>{voucher._id}</td>
               <td>{voucher.barcode}</td>
+
               <td>{voucher.name ? voucher.name : "N/A"}</td>
+              <td>
+                <button onClick={() => voucherDisplay(voucher._id)}>
+                  {voucher.displayPromotional === 1
+                    ? "Deactivate Promotion"
+                    : "Activate Promotion"}
+                </button>
+              </td>
               <td>
                 <button
                   className='bg-red p-2 text-white'
