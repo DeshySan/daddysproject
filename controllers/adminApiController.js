@@ -52,6 +52,14 @@ export const getCategoryFromBO = async (req, res) => {
       });
     }
     const batch = req.body.batch.replace(/\s/g, "-").toLowerCase();
+    const getBatch = await categoryModel.findOne({ batch });
+    if (getBatch) {
+      return res.status(404).send({
+        success: false,
+        message: "Duplicated Batch",
+        getBatch,
+      });
+    }
     const apiValidation = await apiModel.findOne().sort({ _id: -1 });
     const timeStamp = new Date(apiValidation.createdAt);
     const timeDifference = (current_date - timeStamp) / 3600000;

@@ -5,16 +5,19 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true,
   },
   slug: {
     type: String,
     lowercase: true,
+    unique: true,
   },
   spId: {
     type: String,
   },
   batch: {
     type: String,
+    unique: true,
   },
   showOnHomePage: {
     type: Boolean,
