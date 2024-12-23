@@ -486,3 +486,42 @@ export const postVoucher = async (req, res) => {
     });
   }
 };
+
+export const getVoucher = async (req, res) => {
+  try {
+    const voucher = await Vouchers.find().sort({ _id: -1 }).limit(1);
+    res.status(200).send({
+      success: true,
+      message: "Voucher retrieved successfully",
+      voucher,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVouchers = async (req, res) => {
+  try {
+    const voucher = await Vouchers.find().sort({ _id: -1 });
+    res.status(200).send({
+      success: true,
+      message: "Voucher retrieved successfully",
+      voucher,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteVouchers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteVoucher = await Vouchers.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "Voucher deleted",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

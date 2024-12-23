@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminDashboard from "../AdminComponents/AdminDashboard";
 import Barcode from "react-barcode";
 import axios from "axios";
@@ -7,7 +7,7 @@ const Vouchers = () => {
   const [inputValue, setInputValue] = useState(""); // State to track input value
   const [vId, setVID] = useState(0);
   const [memberId, setMemberId] = useState(0);
-  const [promoVoucher, setPromoVoucher] = useState("");
+  const [promoVoucher, setPromoVoucher] = useState([]);
 
   //save to the back office and this db
   const handleIssue = async () => {
@@ -16,7 +16,7 @@ const Vouchers = () => {
       mId: memberId,
       barcode: inputValue,
     });
-    console.log(data);
+    getVouchers();
   };
   //functions
   const handleInputChange = (event) => {
@@ -28,9 +28,36 @@ const Vouchers = () => {
     setInputValue(""); // Reset the state
   };
   const randomBarcode = () => {
-    const test = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    const test = Math.floor(
+      440000000000 + Math.random() * 9000000000
+    ).toString();
     setInputValue(test);
   };
+
+  //get the List of vouchers from Back Office
+  const getVouchers = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/adminAPI/get-vouchers`);
+      setPromoVoucher(data.voucher);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteVouchers = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/adminAPI/delete-vouchers/${id}`
+      );
+      getVouchers();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getVouchers();
+  }, []);
+
   return (
     <AdminDashboard>
       <div className='w-full'>
@@ -92,6 +119,9 @@ const Vouchers = () => {
               ID
             </th>
             <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
+              Voucher Barcode
+            </th>
+            <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
               Voucher Name
             </th>
             <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>
@@ -99,6 +129,22 @@ const Vouchers = () => {
             </th>
           </tr>
         </thead>
+        <tbody>
+          {promoVoucher?.map((voucher) => (
+            <tr className=''>
+              <td>{voucher._id}</td>
+              <td>{voucher.barcode}</td>
+              <td>{voucher.name ? voucher.name : "N/A"}</td>
+              <td>
+                <button
+                  className='bg-red p-2 text-white'
+                  onClick={() => deleteVouchers(voucher._id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </AdminDashboard>
   );

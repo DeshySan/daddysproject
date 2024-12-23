@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import giftcard from "../../assets/giftcard.png";
 import barcode from "../../assets/barcode.png";
 import { Link } from "react-router-dom";
+import Barcode from "react-barcode";
+import axios from "axios";
 const WeeklyVouchers = () => {
+  const [voucherDetail, setVoucherDetail] = useState("");
+  const fetchPromotionalVoucher = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/adminAPI/get-voucher`);
+      console.log(data.voucher[0].barcode);
+      setVoucherDetail(data.voucher);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //want to run this when the page loads
+  useEffect(() => {
+    fetchPromotionalVoucher();
+  }, []);
   return (
     <Dashboard>
       <div
@@ -37,20 +54,18 @@ const WeeklyVouchers = () => {
               </p>
             </div>
           </div>
-          <img src={barcode} alt='' />
+          <Barcode value={voucherDetail[0]?.barcode} width={3} />
           <div className='h-6 bg-slateGray mt-2 w-[400px] rounded-full text-white text-center font-semibold'>
             DADDY'S ECOMMERCE BY SWIFTPOS!
-            <p class='text-gray-600  text-sm   left-1/2 '>
+            <p className='text-gray-600  text-sm   left-1/2 '>
               クーポンコードクーポンコード クーポンコード
             </p>
           </div>
         </div>
         <div className='absolute top-[50%] transform rotate-90 font-bold text-md text-white'>
-          {" "}
           クーポンコードクーポンコード クーポンコード
         </div>
         <div className='absolute left-8 top-[50%] transform rotate-90 font-bold text-md text-white'>
-          {" "}
           クーポンコードクーポンコード クーポンコード
         </div>
       </div>
