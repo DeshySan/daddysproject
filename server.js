@@ -15,7 +15,7 @@ import { dirname } from "path";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
-
+import PaymentRoutes from "./paymentRoutes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 dotenv.config();
@@ -72,11 +72,7 @@ app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/member", memberRoute);
 app.use("/api/v1/family", familyRoute);
 app.use("/api/v1/adminAPI", adminApiRoutes);
-
-app.get(
-  "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["email"] })
-);
+app.use("/api/v1/payments", PaymentRoutes);
 
 app.get(
   "/auth/facebook/callback",

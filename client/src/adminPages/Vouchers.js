@@ -178,7 +178,9 @@ const Vouchers = () => {
 
               <td>{voucher.name ? voucher.name : "N/A"}</td>
               <td>
-                <button onClick={() => voucherDisplay(voucher._id)}>
+                <button
+                  onClick={() => voucherDisplay(voucher._id)}
+                  className='bg-orang p-1 text-white font-semibold'>
                   {voucher.displayPromotional === 1
                     ? "Deactivate Promotion"
                     : "Activate Promotion"}

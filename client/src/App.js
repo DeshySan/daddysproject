@@ -21,6 +21,7 @@ import Checkout from "./Checkout/Checkout.js";
 import GiftCard from "./FrontFace/ProductDisplay/GiftCard.js";
 import WeeklyVouchers from "./FrontFace/ProductDisplay/WeeklyVouchers.js";
 import Vouchers from "./adminPages/Vouchers.js";
+import Payment from "./Payment.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -48,6 +49,7 @@ const App = () => {
         <Route path='test' element={<FacebookLoginButton />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/gift-cards' element={<GiftCard />} />
+        <Route path='/payment' element={<Payment />} />
         <Route path='/weekly-vouchers' element={<WeeklyVouchers />} />
       </Routes>
     </div>
