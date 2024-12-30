@@ -24,6 +24,7 @@ import Vouchers from "./adminPages/Vouchers.js";
 import Payment from "./Payment.js";
 import PaymentComponent from "./Checkout/PaymentComponent.js";
 import ColorPicker from "./FrontFace/utils/ColorPicker.js";
+import GetSuburbLocation from "./FrontFace/GetSuburbLocation.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -54,6 +55,7 @@ const App = () => {
         <Route path='/colors' element={<ColorPicker />} />
         <Route path='/weekly-vouchers' element={<WeeklyVouchers />} />
         <Route path='/payment' element={<PaymentComponent />} />
+        <Route path='/getsub' element={<Loading />} />
       </Routes>
     </div>
   );

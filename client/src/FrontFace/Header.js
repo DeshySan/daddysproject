@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCart } from "./useContext/CartContext";
@@ -6,12 +6,13 @@ import { logout } from "../Redux/authslice";
 import AddtoCart from "./useContext/AddtoCart";
 import axios from "axios";
 import SideBar from "./SideBar";
+import GetSuburbLocation from "./GetSuburbLocation";
 
 const Header = () => {
   // States
   const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
-  const { totalQuantity, showLoading, hideLoading } = useCart();
+  const { totalQuantity, showLoading, hideLoading, loading } = useCart();
   const [cartModal, setCartModal] = useState(false); // Add state to control cart visibility
   const [showDropdown, setShowDropdown] = useState(false); // New state for dropdown visibility
 
@@ -42,8 +43,7 @@ const Header = () => {
         const filteredCat = data.category.filter((catty) =>
           productCategories.includes(catty._id)
         );
-        console.log(response.data.getProducts);
-        console.log("hello");
+
         setCategories(filteredCat);
       }
     } catch (error) {
@@ -72,6 +72,10 @@ const Header = () => {
   const handleMouseLeave = () => {
     setShowDropdown(false);
   };
+  const [counter, setCounter] = useState(0);
+  const location = useMemo(() => {
+    return <GetSuburbLocation />;
+  }, counter);
   const [openSideBar, setOpenSideBar] = useState(false);
   return (
     <div className='relative z-20 overflow-y-scroll'>
@@ -101,14 +105,21 @@ const Header = () => {
           <ul className='flex space-x-6 group hover-cursor'>
             {isAuthenticated ? (
               <div
-                className='relative'
-                onMouseEnter={handleMouseEnter} // Show dropdown when hovering over user section
-                onMouseLeave={handleMouseLeave} // Hide dropdown when mouse leaves user section
+                className='relative flex'
+                // Hide dropdown when mouse leaves user section
               >
-                <h1 className='group hover-cursor'>
+                <h1 className='group hover-cursor text-red font-semibold p-1'>
                   {user.fullName.charAt(0).toUpperCase() +
-                    user.fullName.slice(1)}
+                    user.fullName.slice(1)}{" "}
+                  :
                 </h1>
+
+                <Link
+                  to='/logout'
+                  className='hover:bg-orang hover:text-white rounded-lg text-center p-1'
+                  onClick={handleLogout}>
+                  : Logout
+                </Link>
                 {/* Conditional dropdown */}
                 {showDropdown && (
                   <div className='absolute bg-darkWhite z-10 shadow-lg mt-2 rounded'>
@@ -131,8 +142,10 @@ const Header = () => {
                 <Link to='/member-login'>Login</Link>
               </li>
             )}
-            <li className='mr-4'>
-              <Link>🧭 </Link>
+            <li className='mr-4 flex p-1'>
+              <Link className='flex'>
+                <h1 className='font-bold'>🏚️ :</h1> : {location}
+              </Link>
             </li>
             <li className='mr-4'>🔍</li>
             {/* Cart icon */}
