@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 const CreateProduct = ({ openCreateProduct, setOpenCreateProduct }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState();
   const [category, setCategory] = useState(null);
   const [categories, setCategories] = useState(null);
   const [image, setImage] = useState(null);

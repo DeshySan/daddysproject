@@ -147,8 +147,7 @@ const Header = () => {
                 <h1 className='font-bold'>🏚️ :</h1> : {location}
               </Link>
             </li>
-            <li className='mr-4'>🔍</li>
-            {/* Cart icon */}
+
             <li className='mr-4'>
               <button
                 onClick={() => setCartModal(!cartModal)}

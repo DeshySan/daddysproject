@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { sweetError } from "./errorHandler";
+import { sweetError, sweetSuccess } from "./errorHandler";
+import { useNavigate } from "react-router-dom";
 
 const ProductModal = ({
   openModal,
@@ -9,9 +10,10 @@ const ProductModal = ({
   category,
   setCategory,
 }) => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   // const [category, setCategory] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
   const updateProduct = async (e) => {
@@ -27,6 +29,8 @@ const ProductModal = ({
         }
       );
       if (data.success) {
+        sweetSuccess("Products Updated Successfully");
+        navigate(0);
       }
     } catch (error) {
       console.log(
@@ -47,11 +51,31 @@ const ProductModal = ({
     }
   };
 
+  const getSelectedProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/products/get-product/${productID}`
+      );
+      if (data.success) {
+        setName(data.getProducts.name);
+        setDescription(data.getProducts.description);
+        setPrice(data.getProducts.price);
+        setCategory(data.getProducts.category);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    console.log(category);
     getAllCategory();
   }, []);
-  useEffect(() => {}, [productID]);
+  useEffect(() => {
+    if (productID) {
+      getSelectedProduct();
+    }
+  }, [productID]);
+
   return (
     <div>
       {openModal && (

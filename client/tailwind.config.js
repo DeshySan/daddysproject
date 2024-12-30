@@ -6,8 +6,13 @@ module.exports = {
       animation: {
         marquee: "marquee 7s linear infinite",
         "slide-left-to-right": "slideLTR 1s ease-in-out ",
+        "move-left": "moveLeft 1s ease-in-out",
       },
       keyframes: {
+        moveLeft: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
         marquee: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },

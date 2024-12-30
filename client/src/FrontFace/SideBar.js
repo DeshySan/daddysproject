@@ -35,7 +35,8 @@ const SideBar = ({ openSideBar, setOpenSideBar, categories }) => {
     setDebounceTimeout(timeout);
   };
   return (
-    <div className='absolute top-0 left-0 sidebar w-[40%] bg-slateGray  z-50 min-h-screen'>
+    <div
+      className={`absolute top-0 left-0 sidebar w-[40%] bg-slateGray  z-50 min-h-screen`}>
       <div className='m-2 flex justify-between'>
         <button className='bg-red p-2' onClick={() => setOpenSideBar(false)}>
           Close Button
