@@ -14,10 +14,26 @@ const ProductModal = ({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   // const [category, setCategory] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result); // Set the preview URL
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL (base64 encoded)
+    }
+  };
+
   const updateProduct = async (e) => {
     e.preventDefault();
+    const imageBase64 = imagePreview ? imagePreview.split(",")[1] : null;
     try {
       const { data } = await axios.put(
         `/api/v1/products/update-product/${productID}`,
@@ -26,6 +42,7 @@ const ProductModal = ({
           description,
           price,
           category,
+          image: imageBase64,
         }
       );
       if (data.success) {
@@ -57,6 +74,7 @@ const ProductModal = ({
         `/api/v1/products/get-product/${productID}`
       );
       if (data.success) {
+        console.log(data.getProducts);
         setName(data.getProducts.name);
         setDescription(data.getProducts.description);
         setPrice(data.getProducts.price);
@@ -107,7 +125,6 @@ const ProductModal = ({
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
-
               <div className='mb-4'>
                 <label htmlFor='price'>Enter the Product Price</label>
                 <input
@@ -133,6 +150,32 @@ const ProductModal = ({
                   ))}
                 </select>
               </div>
+              {/* Image preview section */}
+              <div className='mb-4'>
+                <label
+                  htmlFor='image'
+                  className='block text-sm font-medium text-gray-700'>
+                  Image
+                </label>
+                <input
+                  type='file'
+                  id='image'
+                  name='image'
+                  accept='image/*'
+                  onChange={handleImageChange}
+                  className='mt-1 w-full p-2 border border-gray-300 rounded-md'
+                />
+              </div>
+              {/* Display image preview if available */}
+              {imagePreview && (
+                <div className='mb-4'>
+                  <img
+                    src={imagePreview}
+                    alt='Preview'
+                    className='w-40 max-w-sm rounded-md'
+                  />
+                </div>
+              )}
               <div className='flex items-center justify-center'>
                 <button
                   type='submit'
