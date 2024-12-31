@@ -106,7 +106,7 @@ const Checkout = () => {
               <Link to='/' className='bg-slateGray p-4 text-white'>
                 RETURN TO STORE
               </Link>
-              <Link className='bg-orang p-4 text-black'>
+              <Link className='bg-orang p-4 text-black' to='/payment'>
                 Continue to Payment
               </Link>
             </div>

@@ -172,7 +172,7 @@ const Header = () => {
             </li>
             <li>🔍</li>
             <li>
-              <Link className='text-lg'>
+              <Link className='text-lg' to='/checkout'>
                 🛍️
                 {totalQuantity > 0 && (
                   <span className='absolute top-2 right-0 bg-slateGray text-red text-xs rounded-full px-2 py-1'>
@@ -194,7 +194,7 @@ const Header = () => {
                 to={`/daddy/${category.slug}`}
                 onClick={() => handleLinkClick(category._id)}
                 className={`${
-                  activeCategory === category._id ? "text-orang" : "text-black"
+                  activeCategory === category._id ? "text-white" : "text-black"
                 } hover:text-calmGreen font-sourGummy text-l`}>
                 | {category.name} |
               </Link>

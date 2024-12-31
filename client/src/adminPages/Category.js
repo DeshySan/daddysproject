@@ -211,7 +211,7 @@ const Category = () => {
           value={name}
           setValue={setName}
         />
-        <table className='min-w-full rounded-lg shadow-md text-center'>
+        <table className='min-w-full overflow-x-scroll rounded-lg shadow-md text-center'>
           <thead className='bg-lightSlateGray '>
             <tr>
               <th className='py-2 px-4 text-center text-sm font-semibold text-slateGray'>

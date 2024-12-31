@@ -3,14 +3,17 @@ import Dashboard from "../Dashboard";
 import registerImage from "../../assets/bannerImage.jpg"; // Make sure this path is correct
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { sweetError, sweetSuccess } from "../../adminPages/errorHandler.js";
 import {
   loginFailure,
   loginRequest,
   loginSuccess,
 } from "../../Redux/authslice";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../useContext/CartContext";
 
 const MemberRegister = () => {
+  const { showLoading, hideLoading } = useCart();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +48,25 @@ const MemberRegister = () => {
     }
   };
 
+  const handleMemberRegister = async () => {
+    showLoading();
+    try {
+      const { data } = await axios.post(`/api/v1/member/post-member`, {
+        fullName,
+        email,
+        password,
+        mobile,
+        classification,
+      });
+      if (data.success) {
+        sweetSuccess("Member has been registered successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      hideLoading();
+    }
+  };
   return (
     <div>
       <Dashboard>
@@ -110,7 +132,9 @@ const MemberRegister = () => {
                 <option value='low'>Low</option>
               </select>
 
-              <button className='bg-orang text-white w-1/3 mt-3 p-3 font-semibold text-xl rounded-md'>
+              <button
+                className='bg-orang text-white w-1/3 mt-3 p-3 font-semibold text-xl rounded-md'
+                onClick={handleMemberRegister}>
                 Register
               </button>
             </div>

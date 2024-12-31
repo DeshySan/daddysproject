@@ -25,6 +25,11 @@ import Payment from "./Payment.js";
 import PaymentComponent from "./Checkout/PaymentComponent.js";
 import ColorPicker from "./FrontFace/utils/ColorPicker.js";
 import GetSuburbLocation from "./FrontFace/GetSuburbLocation.js";
+import Member from "./adminPages/Member.js";
+import DragDrop from "./adminPages/DragDrop.js";
+import ScrollAnimationComponent from "./adminPages/ScrollAnimationComponent.js";
+import "./App.css";
+import Header2 from "./FrontFace/Layouts/Header2.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -49,13 +54,15 @@ const App = () => {
         <Route path='/product-page' element={<ProductFocus />} />
         <Route path='/product-page/:id' element={<ProductFocus />} />
         <Route path='homefamily' element={<HomeFamily />} />
-        <Route path='test' element={<FacebookLoginButton />} />
+        {/* <Route path='test' element={<FacebookLoginButton />} /> */}
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/test' element={<Header2 />} />
         <Route path='/gift-cards' element={<GiftCard />} />
         <Route path='/colors' element={<ColorPicker />} />
         <Route path='/weekly-vouchers' element={<WeeklyVouchers />} />
         <Route path='/payment' element={<PaymentComponent />} />
-        <Route path='/getsub' element={<Loading />} />
+        <Route path='/admin/members' element={<Member />} />
+        {/* <Route path='/test' element={<ScrollAnimationComponent />} /> */}
       </Routes>
     </div>
   );

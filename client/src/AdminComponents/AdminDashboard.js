@@ -29,6 +29,9 @@ const AdminDashboard = ({ children }) => {
                 <Link to='/admin/vouchers'> 🎫 Vouchers </Link>
               </li>
               <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
+                <Link to='/admin/members'> 🦸 Members </Link>
+              </li>
+              <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>
                 <Link> 👨‍💻 rReport</Link>
               </li>
               <li className='p-2 hover:text-red hover:scale-105 transition-transform duration-300 ease-in-out'>

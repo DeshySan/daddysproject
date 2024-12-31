@@ -155,7 +155,7 @@ export const updateProduct = async (req, res) => {
       image: updatedImagePath,
     });
     res.status(200).send({
-      success: false,
+      success: true,
       message: "Product has been successfully uploaded",
     });
   } catch (error) {

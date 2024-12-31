@@ -18,7 +18,7 @@ export const sendConfirmationEmail = async (email, token) => {
   const confirmationUrl = `http://localhost:1234/api/v1/member/confirm-email?token=${token}`;
   const mailOptions = {
     //to be changed!! Remainder
-    from: "sandeshyneupane@gmail.com",
+    from: "ecomm@daddysecom.com.au",
     to: email,
     subject: "Email Confirmation",
     text: `Please click the following link to confirm your email address: ${confirmationUrl}`,
