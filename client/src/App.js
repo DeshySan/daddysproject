@@ -30,6 +30,7 @@ import DragDrop from "./adminPages/DragDrop.js";
 import ScrollAnimationComponent from "./adminPages/ScrollAnimationComponent.js";
 import "./App.css";
 import Header2 from "./FrontFace/Layouts/Header2.js";
+import Coupon from "./adminPages/Coupon.js";
 
 function GlobalLoading() {
   const { loading } = useCart();
@@ -62,6 +63,7 @@ const App = () => {
         <Route path='/weekly-vouchers' element={<WeeklyVouchers />} />
         <Route path='/payment' element={<PaymentComponent />} />
         <Route path='/admin/members' element={<Member />} />
+        <Route path='/admin/coupons' element={<Coupon />} />
         {/* <Route path='/test' element={<ScrollAnimationComponent />} /> */}
       </Routes>
     </div>
