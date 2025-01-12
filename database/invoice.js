@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const invoiceSchema = new mongoose.Schema(
   {
     invoiceId: {
-      type: number,
+      type: Number,
       required: true,
     },
     saleTotal: {
@@ -14,7 +14,7 @@ const invoiceSchema = new mongoose.Schema(
       type: String,
     },
     status: {
-      type: boolean,
+      type: Boolean,
     },
   },
   { timestamps: true }

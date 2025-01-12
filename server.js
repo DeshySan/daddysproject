@@ -8,6 +8,7 @@ import memberRoute from "./routes/memberRoute.js";
 import familyRoute from "./routes/familyRoute.js";
 import adminApiRoutes from "./routes/adminApiRoutes.js";
 import coupon from "./routes/coupon.js";
+import invoice from "./routes/invoiceRoute.js";
 import connectDB from "./database/db.js";
 import multer from "multer";
 import path from "path";
@@ -75,6 +76,7 @@ app.use("/api/v1/family", familyRoute);
 app.use("/api/v1/adminAPI", adminApiRoutes);
 app.use("/api/v1/payments", PaymentRoutes);
 app.use("/api/v1/coupon", coupon);
+app.use("/api/v1/invoice", invoice);
 
 app.get(
   "/auth/facebook/callback",
