@@ -104,26 +104,35 @@ const Vouchers = () => {
           ISSUE A PROMOTIONAL VOUCHERS
         </h1>
         <div className='flex w-full justify-center items-center flex-col'>
-          <div className='flex'>
-            <input
-              type='number'
-              placeholder='Enter your V ID'
-              className='border border-red block p-2 w-1/2'
-              value={vId}
-              onChange={(e) => setVID(e.target.value)}
-            />
-            <input
-              type='number'
-              placeholder='Enter your MemberID'
-              className='border border-red block p-2 ml-4 w-1/2'
-              value={memberId}
-              onChange={(e) => setMemberId(e.target.value)}
-            />
-            <input
-              type='text'
-              placeholder='Enter the promotional Description'
-              className='border border-red block p-2 ml-4 w-full'
-            />
+          <div className='flex '>
+            <div className='flex flex-col w-full'>
+              <label htmlFor=''>Enter your Voucher ID</label>
+              <input
+                type='number'
+                placeholder='Enter your V ID'
+                className='border border-red block p-2 w-1/2'
+                value={vId}
+                onChange={(e) => setVID(e.target.value)}
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor=''>Enmter your member Id</label>
+              <input
+                type='number'
+                placeholder='Enter your MemberID'
+                className='border border-red block p-2 ml-4 w-1/2'
+                value={memberId}
+                onChange={(e) => setMemberId(e.target.value)}
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor=''>Enter the Description</label>
+              <input
+                type='text'
+                placeholder='Enter the promotional Description'
+                className='border border-red block p-2 ml-4 w-full'
+              />
+            </div>
           </div>
           <button
             className='p-3 bg-slateGray mt-4 mb-2'
